@@ -4,12 +4,12 @@
       contact = "karl-robert.ernst@uni-jena.de"
       type = "git"
 	  src  = "git://springlobby.info/git/overlay/springlobby.git"
-      name = "springlobby">
+      name = "Spring RTS">
     <link>
       http://springlobby.info
     </link>
     <description>
-      spring, springlobby, maps, mods, lua scripts
+    	Everything related to the spring real-time strategy game.
     </description>
   </overlay>
 </layman>
