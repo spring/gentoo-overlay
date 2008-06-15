@@ -4,7 +4,7 @@
       contact = "karl-robert.ernst@uni-jena.de"
       type = "git"
 	  src  = "git://springlobby.info/git/overlay/springlobby.git"
-      name = "Spring RTS">
+      name = "Spring">
     <link>
       http://springlobby.info
     </link>
