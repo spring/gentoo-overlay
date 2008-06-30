@@ -15,19 +15,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="nomirror"
-IUSE="torrent sound"
+IUSE="disable-torrent disable-sound"
 
 RDEPEND="
-	!games-util/springlobby-svn
-	!virtual/springlobby
 	>=x11-libs/wxGTK-2.6.3
-	sound? ( media-libs/sdl-sound media-libs/sdl-mixer )
-	torrent? ( >=net-libs/rb_libtorrent-0.13 )
+	!disable-sound? ( media-libs/sdl-sound media-libs/sdl-mixer )
+	!disable-torrent? ( >=net-libs/rb_libtorrent-0.13 )
 "
 DEPEND="${RDEPEND}
 "
 
-PROVIDE="virtual/springlobby"
 
 my_depend_with_use () {
 	if ! built_with_use $* ; then
@@ -43,10 +40,10 @@ pkg_setup() {
 
 src_compile() {
 	OPTIONS=""
-	if ! use torrent ; then
+	if use disable-torrent ; then
 		OPTIONS="${OPTIONS} --disable-torrent-system"
 	fi
-	if ! use sound ; then
+	if use disable-sound ; then
 		OPTIONS="${OPTIONS} --disable-sound"
 	fi
 
