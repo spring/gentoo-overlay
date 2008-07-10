@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="nomirror"
-IUSE="disable-torrent disable-sound"
+IUSE="disable-torrent disable-sound debug"
 
 RDEPEND="
 	>=x11-libs/wxGTK-2.6.3
@@ -49,6 +49,9 @@ src_compile() {
 
 	econf ${OPTIONS} || die "econf failed"
 	emake || die "emake failed"
+	if !use debug ; then
+		prepall
+	fi
 }
 
 src_install() {
