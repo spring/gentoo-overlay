@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="nomirror"
-IUSE="disable-torrent disable-sound debug"
+IUSE="disable-torrent disable-sound"
 
 RDEPEND="
 	>=x11-libs/wxGTK-2.6.3
