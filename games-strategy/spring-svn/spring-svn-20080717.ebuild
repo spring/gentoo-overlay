@@ -47,7 +47,7 @@ src_compile () {
 	einfo "If anything is weird, please file a bug report at ${HOMEPAGE}."
 	INSTALL_LOCATION="/opt/spring/svn"
 	
-	mycmakeargs="${mycmakeargs} -DSPRING_DATADIR=${INSTALL_LOCATION}"
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=${INSTALL_LOCATION} -DSPRING_DATADIR=${INSTALL_LOCATION}"
 	cmake-utils_src_compile
 }
 
