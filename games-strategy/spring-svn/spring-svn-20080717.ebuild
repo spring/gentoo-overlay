@@ -45,7 +45,7 @@ src_compile () {
 	ewarn "This ebuild installs directly from a development repository."
 	ewarn "The code might not even compile some times."
 	einfo "If anything is weird, please file a bug report at ${HOMEPAGE}."
-	INSTALL_LOCATION="/opt/spring/svn"
+	INSTALL_LOCATION="//opt//spring//svn"
 	
 	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=${INSTALL_LOCATION} -DSPRING_DATADIR=${INSTALL_LOCATION}"
 	cmake-utils_src_compile
