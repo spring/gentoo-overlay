@@ -48,9 +48,11 @@ src_compile () {
 	INSTALL_LOCATION="/opt/spring/svn"
 	
 	mycmakeargs="${mycmakeargs} -DSPRING_DATADIR=${INSTALL_LOCATION}"
+	cmake-utils_src_compile
 }
 
 src_install () {
+	cmake-utils_src_install
 	newicon "${FILESDIR}/spring.png" ${PN}.png
 	make_desktop_entry ${PN} "Spring RTS - svn" ${PN}.png
 	
@@ -60,4 +62,5 @@ src_install () {
 	doins ${WORKDIR}/datadir
 	
 	prepgamesdirs
+	ewarn "The location and structure of spring data has changed, you may need to adjust your lobby configs."
 }
