@@ -46,7 +46,7 @@ src_compile () {
 	ewarn "The code might not even compile some times."
 	einfo "If anything is weird, please file a bug report at ${HOMEPAGE}."
 	
-		mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/" -DBINDIR="${GAMES_BINDIR}" -DLIBDIR="$(games_get_libdir())" -DDATADIR="${GAMES_DATADIR}/${PN}""
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/" -DBINDIR="${GAMES_BINDIR}" -DLIBDIR="$(games_get_libdir)" -DDATADIR="${GAMES_DATADIR}/${PN}""
 	cmake-utils_src_compile
 }
 
@@ -60,7 +60,7 @@ src_install () {
 	cd "${D%%/}$(games_get_libdir())"
 	mv libunitsync.so libunitsync-svn.so
 	
-	doicon ${PN}.png
+	doicon ${FILESDIR}/spring.png
 	make_desktop_entry ${PN} "Spring RTS - svn" ${PN}.png
 	
 	insinto /etc/spring
