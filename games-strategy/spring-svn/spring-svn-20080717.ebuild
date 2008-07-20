@@ -45,20 +45,27 @@ src_compile () {
 	ewarn "This ebuild installs directly from a development repository."
 	ewarn "The code might not even compile some times."
 	einfo "If anything is weird, please file a bug report at ${HOMEPAGE}."
-	INSTALL_LOCATION="/opt/spring/svn"
 	
-	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=${INSTALL_LOCATION} -DSPRING_DATADIR=${INSTALL_LOCATION}"
+		mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/" -DBINDIR="${GAMES_BINDIR}" -DLIBDIR="$(games_get_libdir())" -DDATADIR="${GAMES_DATADIR}/${PN}""
 	cmake-utils_src_compile
 }
 
 src_install () {
 	cmake-utils_src_install
-	newicon "${FILESDIR}/spring.png" ${PN}.png
+
+	cd "${D%%/}${GAMES_BINDIR}"
+	mv spring ${PN}
+	mv dedicated dedicated-svn
+
+	cd "${D%%/}$(games_get_libdir())"
+	mv libunitsync.so libunitsync-svn.so
+	
+	doicon ${PN}.png
 	make_desktop_entry ${PN} "Spring RTS - svn" ${PN}.png
 	
 	insinto /etc/spring
-	echo '$HOME'"/.spring" > ${WORKDIR}/datadir
-#echo "${GAMES_DATADIR}/${PN}" >> ${WORKDIR}/datadir
+	echo '$HOME/.spring' > ${WORKDIR}/datadir
+	#echo "${GAMES_DATADIR}/${PN}" >> ${WORKDIR}/datadir
 	doins ${WORKDIR}/datadir
 	
 	prepgamesdirs

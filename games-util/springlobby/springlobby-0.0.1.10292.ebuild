@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-# TODO add debug use flag
-
 inherit eutils
 
 DESCRIPTION="lobby client for spring rts engine"
@@ -13,18 +11,17 @@ SRC_URI="http://www.springlobby.info/tarballs/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 RESTRICT="nomirror"
-IUSE="disable-torrent disable-sound"
+IUSE="disable-torrent disable-sound debug"
 
 RDEPEND="
 	>=x11-libs/wxGTK-2.6.3
-	!disable-sound? ( media-libs/sdl-sound media-libs/sdl-mixer )
-	!disable-torrent? ( >=net-libs/rb_libtorrent-0.13 )
+	!disable-sound? (	media-libs/sdl-sound
+						media-libs/sdl-mixer )
+	!disable-torrent? (	>=net-libs/rb_libtorrent-0.13 )
 "
 DEPEND="${RDEPEND}
 "
-
 
 my_depend_with_use () {
 	if ! built_with_use $* ; then
