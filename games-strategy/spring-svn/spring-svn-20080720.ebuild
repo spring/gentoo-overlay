@@ -61,7 +61,7 @@ src_install () {
 	mv libunitsync.so libunitsync-svn.so
 	
 	doicon ${FILESDIR}/spring.png
-	make_desktop_entry ${PN} "Spring RTS - svn" ${PN}.png
+	make_desktop_entry ${PN} "Spring RTS - svn" spring.png
 	
 	insinto /etc/spring
 	echo '$HOME/.spring' > ${WORKDIR}/datadir
