@@ -24,7 +24,6 @@ media-libs/glew
 media-libs/openal
 sys-libs/zlib
 virtual/glu
-virtual/jdk
 virtual/opengl
 "
 
@@ -36,9 +35,6 @@ app-arch/zip
 
 pkg_setup () {
 	built_with_use media-libs/libsdl X opengl
-	if ! has_version \>=dev-libs/boost-1.34.0 ; then
-		built_with_use dev-libs/boost threads
-	fi
 }
 
 src_compile () {
