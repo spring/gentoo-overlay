@@ -12,6 +12,10 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 RESTRICT="nomirror"
 
+DEPEND="${RDEPEND}
+app-arch/zip
+"
+
 src_install(){
 	insinto	"${GAMES_DATADIR}/spring/base"
 	doins -r ${WORKDIR}/*
