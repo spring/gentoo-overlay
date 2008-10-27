@@ -1,0 +1,35 @@
+Index: rts/System/SpringApp.cpp
+===================================================================
+--- rts/System/SpringApp.cpp	(Revision 6845)
++++ rts/System/SpringApp.cpp	(Revision 6847)
+@@ -615,6 +615,10 @@
+ 	const float fontSize = 0.027f;      // ~20 pixels at 1024x768
+ 	const float smallFontSize = 0.016f; // ~12 pixels at 1024x768
+ 
++	if (font)
++		delete font;
++	if (smallFont)
++		delete smallFont;
+ 	try {
+ 		font = CglFont::TryConstructFont(fontFile, charFirst, charLast, fontSize);
+ 		smallFont = CglFont::TryConstructFont(fontFile, charFirst, charLast, smallFontSize);
+Index: rts/Rendering/glFont.cpp
+===================================================================
+--- rts/Rendering/glFont.cpp	(Revision 6845)
++++ rts/Rendering/glFont.cpp	(Revision 6847)
+@@ -109,6 +109,7 @@
+ 
+ GLuint CFontTextureRenderer::CreateTexture()
+ {
++	glGetError();
+ 	GLuint tex;
+ 	glGenTextures(1, &tex);
+ 
+@@ -270,6 +271,7 @@
+ 
+ CglFont::~CglFont()
+ {
++	glDeleteTextures(1,&fontTexture);
+ 	delete[] glyphs;
+ }
+ 
