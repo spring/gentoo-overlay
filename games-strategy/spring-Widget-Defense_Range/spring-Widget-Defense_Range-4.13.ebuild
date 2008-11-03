@@ -7,7 +7,7 @@
 inherit games Spring-Install_Widget_LUA_Directory
 
 DESCRIPTION="Spring - Widget - Defense Range 4.13"
-HOMEPAGE="http://spring.jobjol.nl/show_file.php?id=958"
+HOMEPAGE="http://spring.jobjol.nl/958"
 LICENSE="CCPL-Attribution-ShareAlike-NonCommercial-2.5"
 
 SLOT="0"
