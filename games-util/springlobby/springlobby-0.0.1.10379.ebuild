@@ -18,7 +18,7 @@ RDEPEND="
 	>=x11-libs/wxGTK-2.6.3
 	!disable-sound? (	media-libs/sdl-sound
 						media-libs/sdl-mixer )
-	!disable-torrent? (	>=net-libs/rb_libtorrent-0.13 )
+	!disable-torrent? (	>=net-libs/rb_libtorrent-0.14 )
 "
 DEPEND="${RDEPEND}
 "
