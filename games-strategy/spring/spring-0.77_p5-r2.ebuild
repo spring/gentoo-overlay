@@ -15,7 +15,7 @@ SRC_URI="http://spring.clan-sy.com/dl/${MY_P}_src.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug python java"
+IUSE="debug python java custom-cflags"
 RESTRICT="nomirror"
 
 RDEPEND="
@@ -45,9 +45,19 @@ pkg_setup () {
 	built_with_use media-libs/libsdl X opengl
 }
 
+src_unpack() {
+	unpack ${A}
+	EPATCH_FORCE="yes"
+	epatch "${FILESDIR}/pre-0.77b6"
+}
+
 src_compile () {
+	if ! use custom-cflags ; then
+		strip-flags
+	else
+		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
+	fi
 	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/" -DBINDIR="${GAMES_BINDIR}" -DLIBDIR="$(games_get_libdir)" -DDATADIR="${VERSION_DATADIR}" -DSPRING_DATADIR="${VERSION_DATADIR}" -DAPPLICATIONS_DIR="/usr/share/applications/" -DPIXMAPS_DIR="/usr/share/pixmaps/" -DMIME_DIR="/usr/share/mime""
-	mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
 	if use debug ; then
 		mycmakeargs="${mycmakeargs} -DCMAKE_BUILD_TYPE=DEBUG"
 	else
@@ -73,6 +83,10 @@ src_install () {
 	
 	prepgamesdirs
 	ewarn "The location and structure of spring data has changed, you may need to adjust your lobby configs."
+
+	if ! use custom-cflags ; then
+		ewarn "You decided to use custom CFLAGS. This may be save, or it may cause your computer to desync more or less often. If you experience desyncs, disable it before doing any bugreport. If you don'T know what you are doing, *disable custom-cflags*."
+	fi
 }
 
 
