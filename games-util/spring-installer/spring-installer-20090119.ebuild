@@ -14,6 +14,7 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="nomirror"
 
 RDEPEND="
+	games-strategy/spring
 "
 DEPEND="${RDEPEND}
 	dev-ml/extlib
