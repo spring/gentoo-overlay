@@ -36,7 +36,7 @@ pkg_setup() {
 }
 
 src_compile() {
-	append-flags "-DAUX_VERSION=\\\"\"(Gentoo)\"\\\""
+	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
 	OPTIONS=""
 	if use disable-torrent ; then
 		OPTIONS="${OPTIONS} --disable-torrent-system"
