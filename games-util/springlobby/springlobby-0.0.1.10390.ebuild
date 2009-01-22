@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+inherit eutils flag-o-matic
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -36,6 +36,7 @@ pkg_setup() {
 }
 
 src_compile() {
+	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
 	OPTIONS=""
 	if use disable-torrent ; then
 		OPTIONS="${OPTIONS} --disable-torrent-system"
