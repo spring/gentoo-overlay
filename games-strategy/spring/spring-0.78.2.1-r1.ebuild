@@ -51,7 +51,8 @@ src_compile () {
 	else
 		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
 	fi
-	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/" -DBINDIR="${GAMES_BINDIR}" -DLIBDIR="$(games_get_libdir)" -DDATADIR="${VERSION_DATADIR}" -DSPRING_DATADIR="${VERSION_DATADIR}" -DAPPLICATIONS_DIR="/usr/share/applications/" -DPIXMAPS_DIR="/usr/share/pixmaps/" -DMIME_DIR="/usr/share/mime""
+	LIBDIR="$(games_get_libdir)"
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/usr" -DBINDIR="${GAMES_BINDIR#/usr/}" -DLIBDIR="${LIBDIR#/usr/}" -DDATADIR="${VERSION_DATADIR#/usr/}" -DSPRING_DATADIR="${VERSION_DATADIR}""
 	if use debug ; then
 		mycmakeargs="${mycmakeargs} -DCMAKE_BUILD_TYPE=DEBUG"
 	else
