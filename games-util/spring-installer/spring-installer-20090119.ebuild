@@ -25,7 +25,7 @@ DEPEND="${RDEPEND}
 "
 
 src_compile() {
-	emake || die "emake failed"
+	emake -j1 || die "emake failed"
 	prepall
 }
 
