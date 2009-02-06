@@ -43,6 +43,7 @@ VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
 
 pkg_setup () {
 	built_with_use media-libs/libsdl X opengl
+	built_with_use media-libs/devil jpeg png opengl
 }
 
 src_compile () {
