@@ -22,7 +22,7 @@ RDEPEND="
 	>=dev-libs/boost-1.35
 	media-libs/devil
 	>=media-libs/freetype-2.0.0
-	media-libs/glew
+	>=media-libs/glew-1.4
 	>=media-libs/libsdl-1.2.0
 	media-libs/openal
 	sys-libs/zlib
