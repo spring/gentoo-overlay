@@ -44,6 +44,7 @@ VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
 pkg_setup () {
 	built_with_use media-libs/libsdl X opengl
 	built_with_use media-libs/devil jpeg png opengl
+	games_pkg_setup
 }
 
 src_compile () {
@@ -65,13 +66,6 @@ src_compile () {
 src_install () {
 	cmake-utils_src_install
 
-	#cd "${D%%/}${GAMES_BINDIR}"
-	#mv spring spring-$MY_VER
-	#mv spring-dedicated dedicated-$MY_VER
-
-	#cd "${D%%/}$(games_get_libdir)"
-	#mv libunitsync.so libunitsync-$MY_VER.so
-	
 	prepgamesdirs
 	ewarn "The location and structure of spring data has changed, you may need to adjust your lobby configs."
 
