@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils flag-o-matic
+inherit eutils flag-o-matic games
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -33,6 +33,7 @@ my_depend_with_use () {
 pkg_setup() {
 	my_depend_with_use x11-libs/wxGTK X
 	${MY_DEPEND_WITH_USE} || die "Some dependencies need different use flags. Package setup failed."
+	games_pkg_setup
 }
 
 src_compile() {
@@ -47,12 +48,10 @@ src_compile() {
 
 	econf ${OPTIONS} || die "econf failed"
 	emake || die "emake failed"
-	if ! use debug ; then
-		prepall
-	fi
 }
 
 src_install() {
 	emake install DESTDIR=${D}
+	prepgamesdirs
 }
 
