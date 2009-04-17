@@ -42,7 +42,7 @@ src_compile() {
 		OPTIONS="${OPTIONS} --disable-sound"
 	fi
 
-	econf ${OPTIONS} || die "econf failed"
+	egamesconf ${OPTIONS} || die "econf failed"
 	emake || die "emake failed"
 }
 
