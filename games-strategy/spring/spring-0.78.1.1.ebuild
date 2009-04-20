@@ -2,20 +2,23 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit subversion games eutils cmake-utils fdo-mime
+inherit games eutils cmake-utils fdo-mime flag-o-matic
+
+MY_VER=${PV/_p/b}
+MY_P=${PN}_$MY_VER
+S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="a 3D multiplayer real time strategy game engine"
 HOMEPAGE="http://spring.clan-sy.com"
-ESVN_REPO_URI="https://spring.clan-sy.com/svn/spring/trunk"
+SRC_URI="http://spring.clan-sy.com/dl/${MY_P}_src.tar.lzma"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug python-bindings"
+IUSE="debug python java custom-cflags"
+RESTRICT="nomirror"
 
 RDEPEND="
-	!virtual/game_spring
-	!games-strategy/taspring-linux-release
 	>=dev-libs/boost-1.35
 	media-libs/devil
 	>=media-libs/freetype-2.0.0
@@ -25,10 +28,12 @@ RDEPEND="
 	sys-libs/zlib
 	virtual/glu
 	virtual/opengl
-	python-bindings? ( >=dev-lang/python-2.5 )
+	python? ( >=dev-lang/python-2.5 )
+	java? ( virtual/jdk )
 "
 
 DEPEND="${RDEPEND}
+	>=sys-devel/gcc-4.2
 	app-arch/zip
 	>=dev-util/cmake-2.6.0
 "
@@ -41,10 +46,11 @@ pkg_setup () {
 }
 
 src_compile () {
-	ewarn "This ebuild installs directly from a development repository."
-	ewarn "The code might not even compile some times."
-	einfo "If anything is weird, please file a bug report at ${HOMEPAGE}."
-	
+	if ! use custom-cflags ; then
+		strip-flags
+	else
+		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
+	fi
 	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/" -DBINDIR="${GAMES_BINDIR}" -DLIBDIR="$(games_get_libdir)" -DDATADIR="${VERSION_DATADIR}" -DSPRING_DATADIR="${VERSION_DATADIR}" -DAPPLICATIONS_DIR="/usr/share/applications/" -DPIXMAPS_DIR="/usr/share/pixmaps/" -DMIME_DIR="/usr/share/mime""
 	if use debug ; then
 		mycmakeargs="${mycmakeargs} -DCMAKE_BUILD_TYPE=DEBUG"
@@ -57,12 +63,12 @@ src_compile () {
 src_install () {
 	cmake-utils_src_install
 
-	cd "${D%%/}${GAMES_BINDIR}"
-	mv spring ${PN}
-	mv dedicated dedicated-svn
+	#cd "${D%%/}${GAMES_BINDIR}"
+	#mv spring spring-$MY_VER
+	#mv spring-dedicated dedicated-$MY_VER
 
-	cd "${D%%/}$(games_get_libdir())"
-	mv libunitsync.so libunitsync-svn.so
+	#cd "${D%%/}$(games_get_libdir)"
+	#mv libunitsync.so libunitsync-$MY_VER.so
 	
 	insinto /etc/spring
 		echo '$HOME/.spring' > ${WORKDIR}/datadir
@@ -71,6 +77,10 @@ src_install () {
 	
 	prepgamesdirs
 	ewarn "The location and structure of spring data has changed, you may need to adjust your lobby configs."
+
+	if ! use custom-cflags ; then
+		ewarn "You decided to use custom CFLAGS. This may be save, or it may cause your computer to desync more or less often. If you experience desyncs, disable it before doing any bugreport. If you don'T know what you are doing, *disable custom-cflags*."
+	fi
 }
 
 

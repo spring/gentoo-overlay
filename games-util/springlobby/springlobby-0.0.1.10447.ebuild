@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+inherit eutils flag-o-matic games
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -18,24 +18,22 @@ RDEPEND="
 	>=x11-libs/wxGTK-2.6.3
 	!disable-sound? (	media-libs/sdl-sound
 						media-libs/sdl-mixer )
-	!disable-torrent? (	>=net-libs/rb_libtorrent-0.13 )
+	!disable-torrent? (	>=net-libs/rb_libtorrent-0.14 )
 "
 DEPEND="${RDEPEND}
 "
 
-my_depend_with_use () {
-	if ! built_with_use $* ; then
-		eerror "Please run 'echo \"$*\" >> /etc/portage/package.use' and re-emerge '$1'."
-		MY_DEPEND_WITH_USE=false
-	fi
-}
-
 pkg_setup() {
-	my_depend_with_use x11-libs/wxGTK X
-	${MY_DEPEND_WITH_USE} || die "Some dependencies need different use flags. Package setup failed."
+	if ! built_with_use x11-libs/wxGTK X ; then
+		eerror "You are trying to compile ${CATEGORY}/${PF},"
+		eerror "but x11-libs/wxGTK is not built with X support."
+		die "Please, rebuild x11-libs/wxGTK with the \"X\" USE flag."
+	fi
+	games_pkg_setup
 }
 
 src_compile() {
+	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
 	OPTIONS=""
 	if use disable-torrent ; then
 		OPTIONS="${OPTIONS} --disable-torrent-system"
@@ -44,14 +42,12 @@ src_compile() {
 		OPTIONS="${OPTIONS} --disable-sound"
 	fi
 
-	econf ${OPTIONS} || die "econf failed"
+	egamesconf ${OPTIONS} || die "econf failed"
 	emake || die "emake failed"
-	if ! use debug ; then
-		prepall
-	fi
 }
 
 src_install() {
 	emake install DESTDIR=${D}
+	prepgamesdirs
 }
 

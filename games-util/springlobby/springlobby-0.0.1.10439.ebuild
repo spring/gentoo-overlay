@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+inherit eutils flag-o-matic games
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -18,7 +18,7 @@ RDEPEND="
 	>=x11-libs/wxGTK-2.6.3
 	!disable-sound? (	media-libs/sdl-sound
 						media-libs/sdl-mixer )
-	!disable-torrent? (	>=net-libs/rb_libtorrent-0.13 )
+	!disable-torrent? (	>=net-libs/rb_libtorrent-0.14 )
 "
 DEPEND="${RDEPEND}
 "
@@ -33,9 +33,11 @@ my_depend_with_use () {
 pkg_setup() {
 	my_depend_with_use x11-libs/wxGTK X
 	${MY_DEPEND_WITH_USE} || die "Some dependencies need different use flags. Package setup failed."
+	games_pkg_setup
 }
 
 src_compile() {
+	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
 	OPTIONS=""
 	if use disable-torrent ; then
 		OPTIONS="${OPTIONS} --disable-torrent-system"
@@ -46,12 +48,10 @@ src_compile() {
 
 	econf ${OPTIONS} || die "econf failed"
 	emake || die "emake failed"
-	if ! use debug ; then
-		prepall
-	fi
 }
 
 src_install() {
 	emake install DESTDIR=${D}
+	prepgamesdirs
 }
 

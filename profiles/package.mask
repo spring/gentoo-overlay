@@ -1,1 +1,4 @@
 =games-strategy/spring-Widget-Defense_Range-4.13
+
+# Old versions are broken with new spring
+<=games-util/springlobby-0.0.1.10388 
