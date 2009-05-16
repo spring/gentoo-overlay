@@ -49,5 +49,10 @@ src_compile() {
 src_install() {
 	emake install DESTDIR=${D}
 	prepgamesdirs
+	dodir /usr/share/games/icons/hicolor/scalable/apps/
+	mv ${D}/usr/share/games/pixmaps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
+	rm ${D}/usr/share/games/pixmaps/ -fr
+	dodir /etc/env.d/
+	echo 'XDG_DATA_DIRS="/usr/share/games"' >> ${D}/etc/env.d/99games
 }
 
