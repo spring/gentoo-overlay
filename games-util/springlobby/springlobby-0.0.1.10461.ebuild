@@ -23,16 +23,12 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 
-my_depend_with_use () {
-	if ! built_with_use $* ; then
-		eerror "Please run 'echo \"$*\" >> /etc/portage/package.use' and re-emerge '$1'."
-		MY_DEPEND_WITH_USE=false
-	fi
-}
-
 pkg_setup() {
-	my_depend_with_use x11-libs/wxGTK X
-	${MY_DEPEND_WITH_USE} || die "Some dependencies need different use flags. Package setup failed."
+	if ! built_with_use x11-libs/wxGTK X ; then
+		eerror "You are trying to compile ${CATEGORY}/${PF},"
+		eerror "but x11-libs/wxGTK is not built with X support."
+		die "Please, rebuild x11-libs/wxGTK with the \"X\" USE flag."
+	fi
 	games_pkg_setup
 }
 
@@ -46,12 +42,17 @@ src_compile() {
 		OPTIONS="${OPTIONS} --disable-sound"
 	fi
 
-	econf ${OPTIONS} || die "econf failed"
+	egamesconf ${OPTIONS} || die "econf failed"
 	emake || die "emake failed"
 }
 
 src_install() {
 	emake install DESTDIR=${D}
 	prepgamesdirs
+	dodir /usr/share/games/icons/hicolor/scalable/apps/
+	mv ${D}/usr/share/games/pixmaps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
+	rm ${D}/usr/share/games/pixmaps/ -fr
+	dodir /etc/env.d/
+	echo 'XDG_DATA_DIRS="/usr/share/games"' >> ${D}/etc/env.d/99games
 }
 
