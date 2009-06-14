@@ -67,7 +67,6 @@ src_install () {
 	cmake-utils_src_install
 
 	prepgamesdirs
-	ewarn "The location and structure of spring data has changed, you may need to adjust your lobby configs."
 
 	if use custom-cflags ; then
 		ewarn "You decided to use custom CFLAGS. This may be save, or it may cause your computer to desync more or less often. If you experience desyncs, disable it before doing any bugreport. If you don't know what you are doing, *disable custom-cflags*."
