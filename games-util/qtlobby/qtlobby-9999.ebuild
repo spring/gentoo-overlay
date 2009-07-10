@@ -17,8 +17,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="
+	x11-libs/qt-gui
 	x11-libs/qt-core
-	x11-libs/qt-network
 	x11-libs/qt-xmlpatterns
 "
 
