@@ -19,6 +19,7 @@ IUSE=""
 RDEPEND="
 	x11-libs/qt-gui
 	x11-libs/qt-network
+	x11-libs/qt-xml
 "
 
 DEPEND="${RDEPEND}
@@ -28,5 +29,8 @@ src_prepare () {
 	qmake
 }
 
-
- 
+src_install() {
+	#should better use ${GAMES_BINDIR} (without the /bin)
+	emake INSTALL_ROOT="${D}/usr/games" install
+	prepgamesdirs
+}
