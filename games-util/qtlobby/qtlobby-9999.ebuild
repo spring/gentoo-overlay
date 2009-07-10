@@ -19,7 +19,7 @@ IUSE=""
 RDEPEND="
 	x11-libs/qt-gui
 	x11-libs/qt-network
-	x11-libs/qt-xml
+	x11-libs/qt-xmlpatterns
 "
 
 DEPEND="${RDEPEND}
