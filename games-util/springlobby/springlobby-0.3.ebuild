@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit eutils flag-o-matic games
 
 DESCRIPTION="lobby client for spring rts engine"
@@ -15,22 +17,13 @@ RESTRICT="nomirror"
 IUSE="disable-torrent disable-sound debug"
 
 RDEPEND="
-	>=x11-libs/wxGTK-2.6.3
+	>=x11-libs/wxGTK-2.6.3[X]
 	!disable-sound? (	media-libs/sdl-sound
 						media-libs/sdl-mixer )
 	!disable-torrent? (	>=net-libs/rb_libtorrent-0.14 )
 "
 DEPEND="${RDEPEND}
 "
-
-pkg_setup() {
-	if ! built_with_use x11-libs/wxGTK X ; then
-		eerror "You are trying to compile ${CATEGORY}/${PF},"
-		eerror "but x11-libs/wxGTK is not built with X support."
-		die "Please, rebuild x11-libs/wxGTK with the \"X\" USE flag."
-	fi
-	games_pkg_setup
-}
 
 src_compile() {
 	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
