@@ -31,6 +31,10 @@ src_prepare () {
 
 src_install() {
 	#should better use ${GAMES_BINDIR} (without the /bin)
-	emake INSTALL_ROOT="${D}/usr/games" install
+	emake INSTALL_ROOT="${D}/usr" install
+	dogamesbin ${D}/usr/bin/qtlobby
+	rm ${D}/usr/bin/qtlobby
+	dodir /usr/share/games/icons/hicolor/scalable/apps/
+	mv ${WORKDIR}/${PF}/icons/heart.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/heart.svg
 	prepgamesdirs
 }
