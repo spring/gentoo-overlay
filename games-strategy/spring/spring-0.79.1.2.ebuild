@@ -30,8 +30,12 @@ RDEPEND="
 	virtual/opengl
 	python? ( >=dev-lang/python-2.5 )
 	java? ( virtual/jdk )
-	maps? ( games-strategy/spring-maps-default
-			games-strategy/spring-maps-1v1 )
+	games-strategy/spring-maps-default
+	maps? ( games-strategy/spring-maps-teamplay
+			games-strategy/spring-maps-1v1
+			games-strategy/spring-maps-smallsupreme
+			games-strategy/spring-maps-hunterw
+			games-strategy/spring-maps-deltasiege )
 "
 
 DEPEND="${RDEPEND}
