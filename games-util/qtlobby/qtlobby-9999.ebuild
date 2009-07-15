@@ -19,6 +19,7 @@ IUSE=""
 RDEPEND="
 	x11-libs/qt-gui
 	x11-libs/qt-core
+	x11-libs/qt-script
 	x11-libs/qt-xmlpatterns
 	x11-libs/qscintilla
 "
