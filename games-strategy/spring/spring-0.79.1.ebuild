@@ -17,7 +17,7 @@ SRC_URI="http://springrts.com/dl/${MY_P}_src.tar.lzma"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug python java custom-cflags"
+IUSE="debug python java custom-cflags maps"
 RESTRICT="nomirror"
 
 RDEPEND="
@@ -32,6 +32,8 @@ RDEPEND="
 	virtual/opengl
 	python? ( >=dev-lang/python-2.5 )
 	java? ( virtual/jdk )
+	maps ? (games-strategy/spring-maps-default
+			games-strategy/spring-maps-1v1)
 "
 
 DEPEND="${RDEPEND}
