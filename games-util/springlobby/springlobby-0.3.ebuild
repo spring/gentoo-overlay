@@ -25,8 +25,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 
-src_compile() {
-	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
+src_configure() {
 	OPTIONS=""
 	if use disable-torrent ; then
 		OPTIONS="${OPTIONS} --disable-torrent-system"
@@ -36,6 +35,10 @@ src_compile() {
 	fi
 
 	egamesconf ${OPTIONS} || die "econf failed"
+}
+
+src_compile() {
+	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
 	emake || die "emake failed"
 }
 
