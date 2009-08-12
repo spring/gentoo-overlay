@@ -54,6 +54,11 @@ src_compile () {
 	else
 		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
 	fi
+
+	if ! use custom-cflags ; then
+		mycmakeargs="${mycmakeargs} -DAIINTERFACES=native"
+	fi
+
 	LIBDIR="$(games_get_libdir)"
 	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/usr" -DBINDIR="${GAMES_BINDIR#/usr/}" -DLIBDIR="${LIBDIR#/usr/}" -DDATADIR="${VERSION_DATADIR#/usr/}" -DSPRING_DATADIR="${VERSION_DATADIR}""
 	if use debug ; then
