@@ -16,7 +16,7 @@ EGIT_REPO_URI="git://github.com/spring/spring.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug python java custom-cflags"
+IUSE="debug java custom-cflags"
 RESTRICT="nomirror"
 
 RDEPEND="
@@ -29,7 +29,6 @@ RDEPEND="
 	sys-libs/zlib
 	virtual/glu
 	virtual/opengl
-	python? ( >=dev-lang/python-2.5 )
 	java? ( virtual/jdk )
 "
 
