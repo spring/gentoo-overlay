@@ -55,7 +55,7 @@ src_compile () {
 		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
 	fi
 
-	if ! use custom-cflags ; then
+	if ! use java ; then
 		mycmakeargs="${mycmakeargs} -DAIINTERFACES=native"
 	fi
 
