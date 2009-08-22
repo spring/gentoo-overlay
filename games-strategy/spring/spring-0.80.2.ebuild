@@ -29,7 +29,6 @@ RDEPEND="
 	virtual/glu
 	virtual/opengl
 	java? ( virtual/jdk )
-	games-strategy/spring-maps-default
 "
 
 DEPEND="${RDEPEND}
