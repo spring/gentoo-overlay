@@ -27,7 +27,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 
-src_prepare () {
+src_configure() {
 	export SVN_REVISION="\"${ESVN_WC_REVISION} (Gentoo,$ARCH)\""
 	qmake
 }
