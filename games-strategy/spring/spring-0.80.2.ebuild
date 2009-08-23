@@ -54,7 +54,7 @@ src_compile () {
 	fi
 
 	if ! use java ; then
-		mycmakeargs="${mycmakeargs} -DAIINTERFACES=native"
+		mycmakeargs="${mycmakeargs} -DAIINTERFACES=NATIVE"
 	fi
 
 	LIBDIR="$(games_get_libdir)"
