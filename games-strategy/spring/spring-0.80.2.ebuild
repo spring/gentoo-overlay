@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit games eutils cmake-utils fdo-mime flag-o-matic
 
 MY_VER=${PV/_p/b}
@@ -20,10 +22,10 @@ RESTRICT="nomirror"
 
 RDEPEND="
 	>=dev-libs/boost-1.35
-	media-libs/devil
+	media-libs/devil[jpeg,png,opengl]
 	>=media-libs/freetype-2.0.0
 	>=media-libs/glew-1.4
-	>=media-libs/libsdl-1.2.0
+	>=media-libs/libsdl-1.2.0[X,opengl]
 	media-libs/openal
 	sys-libs/zlib
 	virtual/glu
@@ -41,8 +43,6 @@ DEPEND="${RDEPEND}
 VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
 
 pkg_setup () {
-	built_with_use media-libs/libsdl X opengl
-	built_with_use media-libs/devil jpeg png opengl
 	games_pkg_setup
 }
 
