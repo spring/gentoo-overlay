@@ -6,7 +6,7 @@ EAPI=2
 
 ESVN_REPO_URI="http://qtlobby.googlecode.com/svn/trunk/"
 
-inherit games subversion eutils
+inherit games subversion eutils cmake-utils
 
 DESCRIPTION="Qt-Lobby"
 HOMEPAGE="http://code.google.com/p/qtlobby/"
@@ -28,17 +28,19 @@ DEPEND="${RDEPEND}
 "
 
 src_configure() {
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="GAMES_PREFIX""
+	
 	subversion_wc_info
 	export SVN_REVISION="\"${ESVN_WC_REVISION} (Gentoo,$ARCH)\""
-	qmake
+	cmake-utils_src_configure
 }
 
-src_install() {
+#src_install() {
 	#should better use ${GAMES_BINDIR} (without the /bin)
-	emake INSTALL_ROOT="${D}/usr" install
-	dogamesbin ${D}/usr/bin/qtlobby
-	rm ${D}/usr/bin/qtlobby
-	dodir /usr/share/games/icons/hicolor/scalable/apps/
-	mv ${WORKDIR}/${PF}/icons/heart.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/heart.svg
-	prepgamesdirs
-}
+	#emake INSTALL_ROOT="${D}/usr" install
+	#dogamesbin ${D}/usr/bin/qtlobby
+	#rm ${D}/usr/bin/qtlobby
+	#dodir /usr/share/games/icons/hicolor/scalable/apps/
+	#mv ${WORKDIR}/${PF}/icons/heart.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/heart.svg
+	#prepgamesdirs
+#}
