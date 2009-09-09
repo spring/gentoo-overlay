@@ -27,20 +27,25 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 
+src_unpack() {
+	subversion_src_unpack
+}
+
 src_configure() {
-	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="GAMES_PREFIX""
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="$GAMES_PREFIX""
 	
 	subversion_wc_info
 	export SVN_REVISION="\"${ESVN_WC_REVISION} (Gentoo,$ARCH)\""
 	cmake-utils_src_configure
 }
 
-#src_install() {
+src_install() {
+	cmake-utils_src_install
+	prepgamesdirs
 	#should better use ${GAMES_BINDIR} (without the /bin)
 	#emake INSTALL_ROOT="${D}/usr" install
 	#dogamesbin ${D}/usr/bin/qtlobby
 	#rm ${D}/usr/bin/qtlobby
-	#dodir /usr/share/games/icons/hicolor/scalable/apps/
-	#mv ${WORKDIR}/${PF}/icons/heart.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/heart.svg
-	#prepgamesdirs
-#}
+	dodir /usr/share/games/icons/hicolor/scalable/apps/
+	mv ${WORKDIR}/${PF}/icons/heart.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/heart.svg
+}
