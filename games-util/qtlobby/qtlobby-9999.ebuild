@@ -35,7 +35,7 @@ src_configure() {
 	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="$GAMES_PREFIX""
 	
 	subversion_wc_info
-	export SVN_REVISION="\"${ESVN_WC_REVISION} (Gentoo,$ARCH)\""
+	export SVN_REV="\"${ESVN_WC_REVISION} (Gentoo,$ARCH)\""
 	cmake-utils_src_configure
 }
 
