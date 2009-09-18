@@ -4,15 +4,18 @@
 
 EAPI=2
 
-inherit games eutils cmake-utils fdo-mime flag-o-matic
+EGIT_REPO_URI="git://github.com/spring/spring.git"
+EGIT_BRANCH="${PV%.9999}-branch"
+
+inherit games eutils cmake-utils fdo-mime flag-o-matic git
 
 MY_VER=${PV/_p/b}
 MY_P=${PN}_$MY_VER
 S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="a 3D multiplayer real time strategy game engine"
-HOMEPAGE="http://springrts.com"
-SRC_URI="http://springrts.com/dl/${MY_P}_src.tar.lzma"
+HOMEPAGE="http://spring.clan-sy.com"
+
 
 LICENSE="GPL-2"
 SLOT="0"
