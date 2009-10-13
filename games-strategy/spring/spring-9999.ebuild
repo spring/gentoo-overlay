@@ -88,7 +88,6 @@ src_install () {
 	fi
 }
 
-
 pkg_postinst() {
 	fdo-mime_mime_database_update
 	games_pkg_postinst
