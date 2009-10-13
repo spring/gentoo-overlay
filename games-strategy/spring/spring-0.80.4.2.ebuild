@@ -4,15 +4,12 @@
 
 EAPI=2
 
-inherit games eutils cmake-utils fdo-mime flag-o-matic
-
-MY_VER=${PV/_p/b}
-MY_P=${PN}_$MY_VER
-S=${WORKDIR}/${MY_P}
+inherit cmake-utils eutils fdo-mime flag-o-matic games
 
 DESCRIPTION="a 3D multiplayer real time strategy game engine"
 HOMEPAGE="http://springrts.com"
-SRC_URI="http://springrts.com/dl/${MY_P}_src.tar.lzma"
+SRC_URI="http://springrts.com/dl/${PF/-/_}_src.tar.lzma"
+S="${WORKDIR}/${PF/-/_}"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -42,11 +39,9 @@ DEPEND="${RDEPEND}
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
 VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
 
-pkg_setup () {
-	games_pkg_setup
-}
-
-src_compile () {
+src_configure() {
+	cmake-utils_src_configure
+	
 	if ! use custom-cflags ; then
 		strip-flags
 	else
@@ -76,7 +71,9 @@ src_compile () {
 	else
 		mycmakeargs="${mycmakeargs} -DUSE_GML_SIM=NO"
 	fi
+}
 
+src_compile () {
 	cmake-utils_src_compile
 }
 
@@ -89,7 +86,6 @@ src_install () {
 		ewarn "You decided to use custom CFLAGS. This may be save, or it may cause your computer to desync more or less often. If you experience desyncs, disable it before doing any bugreport. If you don't know what you are doing, *disable custom-cflags*."
 	fi
 }
-
 
 pkg_postinst() {
 	fdo-mime_mime_database_update
