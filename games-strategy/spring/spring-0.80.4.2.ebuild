@@ -8,7 +8,7 @@ inherit cmake-utils eutils fdo-mime flag-o-matic games
 
 DESCRIPTION="a 3D multiplayer real time strategy game engine"
 HOMEPAGE="http://springrts.com"
-SRC_URI="http://springrts.com/dl/${PF/-/_}_src.tar.lzma"
+SRC_URI="mirror://sourceforge/springrts/${PF/-/_}_src.tar.lzma"
 S="${WORKDIR}/${PF/-/_}"
 
 LICENSE="GPL-2"
