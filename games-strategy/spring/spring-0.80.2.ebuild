@@ -12,7 +12,7 @@ S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="a 3D multiplayer real time strategy game engine"
 HOMEPAGE="http://springrts.com"
-SRC_URI="http://springrts.com/dl/${MY_P}_src.tar.lzma"
+SRC_URI="mirror://sourceforge/springrts/${MY_P}_src.tar.lzma"
 
 LICENSE="GPL-2"
 SLOT="0"
