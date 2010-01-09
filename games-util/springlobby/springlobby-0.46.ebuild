@@ -34,7 +34,7 @@ src_configure() {
 	if ! use sound ; then
 		mycmakeargs="${mycmakeargs} -DOPTION_SOUND=OFF"
 	fi
-	mycmakeargs="${mycmakeargs} -DAUX_VERSION=\" (Gentoo;$ARCH)\" -DCMAKE_INSTALL_PREFIX=/usr/games/"
+	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo;$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
 	cmake-utils_src_configure
 }
 
