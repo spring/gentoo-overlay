@@ -40,8 +40,6 @@ DEPEND="${RDEPEND}
 VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
 
 src_configure() {
-	cmake-utils_src_configure
-	
 	if ! use custom-cflags ; then
 		strip-flags
 	else
@@ -53,11 +51,11 @@ src_configure() {
 	fi
 
 	LIBDIR="$(games_get_libdir)"
-	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX="/usr" -DBINDIR="${GAMES_BINDIR#/usr/}" -DLIBDIR="${LIBDIR#/usr/}" -DDATADIR="${VERSION_DATADIR#/usr/}" -DSPRING_DATADIR="${VERSION_DATADIR}""
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=/usr -DBINDIR=${GAMES_BINDIR#/usr/} -DLIBDIR=${LIBDIR#/usr/} -DDATADIR=${VERSION_DATADIR#/usr/}"
 	if use debug ; then
-		mycmakeargs="${mycmakeargs} -DCMAKE_BUILD_TYPE=DEBUG"
+		CMAKE_BUILD_TYPE="DEBUG"
 	else
-		mycmakeargs="${mycmakeargs} -DCMAKE_BUILD_TYPE=RELEASE"
+		CMAKE_BUILD_TYPE="RELEASE"
 	fi
 
 	if use gml ; then
@@ -71,6 +69,7 @@ src_configure() {
 	else
 		mycmakeargs="${mycmakeargs} -DUSE_GML_SIM=NO"
 	fi
+	cmake-utils_src_configure
 }
 
 src_compile () {
