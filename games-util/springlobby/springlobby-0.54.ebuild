@@ -4,7 +4,7 @@
 
 EAPI=2
 
-inherit eutils flag-o-matic games
+inherit cmake-utils eutils flag-o-matic games
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -18,36 +18,40 @@ IUSE="+torrent +sound debug"
 
 RDEPEND="
 	>=x11-libs/wxGTK-2.8[X]
-	sound? (	media-libs/sdl-sound
-						media-libs/sdl-mixer )
+	net-misc/curl
+	sound? (	media-libs/openal )
 	torrent? (	>=net-libs/rb_libtorrent-0.14 )
 "
+
 DEPEND="${RDEPEND}
+	>=dev-util/cmake-2.6.0
 "
 
 src_configure() {
-	OPTIONS=""
 	if ! use torrent ; then
-		OPTIONS="${OPTIONS} --disable-torrent-system"
+		mycmakeargs="${mycmakeargs} -DOPTION_TORRENT_SYSTEM=OFF"
 	fi
 	if ! use sound ; then
-		OPTIONS="${OPTIONS} --disable-sound"
+		mycmakeargs="${mycmakeargs} -DOPTION_SOUND=OFF"
 	fi
-
-	egamesconf ${OPTIONS} || die "econf failed"
+	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo,$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
+	cmake-utils_src_configure
 }
 
-src_compile() {
-	append-flags "-DAUX_VERSION=\\\"\"_(Gentoo;$ARCH)\"\\\""
-	emake || die "emake failed"
+src_compile () {
+	cmake-utils_src_compile
 }
 
 src_install() {
-	emake install DESTDIR=${D}
+	cmake-utils_src_install
 	prepgamesdirs
+	# bad
 	dodir /usr/share/games/icons/hicolor/scalable/apps/
-	mv ${D}/usr/share/games/pixmaps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
+	mv ${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
 	rm ${D}/usr/share/games/pixmaps/ -fr
+	dodir /usr/share/games/applications/
+	mv ${D}/usr/games/share/applications/springlobby.desktop ${D}/usr/share/games/applications/springlobby.desktop
+	rm ${D}/usr/games/share/applications/ -fr
 	dodir /etc/env.d/
 	echo 'XDG_DATA_DIRS="/usr/share/games"' >> ${D}/etc/env.d/99games
 }
