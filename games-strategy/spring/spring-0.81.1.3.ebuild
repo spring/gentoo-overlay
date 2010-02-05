@@ -31,10 +31,11 @@ RDEPEND="
 "
 
 DEPEND="${RDEPEND}
-	>=sys-devel/gcc-4.2
+	>=sys-devel/gcc-4.4
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 "
+### gcc 4.4 dependency is bad, but 4.3 causes desync problems
 
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
 VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
