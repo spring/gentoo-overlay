@@ -31,7 +31,7 @@ RDEPEND="
 "
 
 DEPEND="${RDEPEND}
-	>=sys-devel/gcc-4.4
+	>=sys-devel/gcc-4.1
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 "
