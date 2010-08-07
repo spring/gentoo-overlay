@@ -14,7 +14,7 @@ S="${WORKDIR}/${PF/-/_}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug java custom-cflags gml gmlsim"
+IUSE="debug java custom-cflags gml headless"
 RESTRICT="nomirror"
 
 RDEPEND="
@@ -40,6 +40,17 @@ DEPEND="${RDEPEND}
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
 VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
 
+src_prepare() {
+	if ! use gml ; then
+		epatch "${FILESDIR}/no_gml.patch"
+	fi
+
+
+	if ! use headless ; then
+		epatch "${FILESDIR}/no_headless.patch"
+	fi
+}
+
 src_configure() {
 	if ! use custom-cflags ; then
 		strip-flags
@@ -59,17 +70,6 @@ src_configure() {
 		CMAKE_BUILD_TYPE="RELEASE"
 	fi
 
-	if use gml ; then
-		mycmakeargs="${mycmakeargs} -DUSE_GML=YES"
-	else
-		mycmakeargs="${mycmakeargs} -DUSE_GML=NO"
-	fi
-
-	if use gmlsim ; then
-		mycmakeargs="${mycmakeargs} -DUSE_GML_SIM=YES"
-	else
-		mycmakeargs="${mycmakeargs} -DUSE_GML_SIM=NO"
-	fi
 	cmake-utils_src_configure
 }
 
