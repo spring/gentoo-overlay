@@ -13,7 +13,7 @@ S="${WORKDIR}/${PF/-/_}"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86 ~amd64"
 IUSE="debug java custom-cflags gml headless"
 RESTRICT="nomirror"
 
