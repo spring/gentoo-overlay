@@ -19,6 +19,7 @@ IUSE="+torrent +sound debug"
 RDEPEND="
 	>=x11-libs/wxGTK-2.8[X]
 	net-misc/curl
+	x11-libs/libnotify
 	sound? (	media-libs/openal )
 	torrent? (	>=net-libs/rb_libtorrent-0.14 )
 "
