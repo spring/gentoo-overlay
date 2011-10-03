@@ -29,16 +29,17 @@ DEPEND="${RDEPEND}
 "
 
 src_configure() {
-	if ! use torrent ; then
+	if use torrent ; then
+		CFLAGS="$CFLAGS $(pkg-config --cflags libtorrent-rasterbar)"
+		CXXFLAGS="$CXXFLAGS $(pkg-config --cflags libtorrent-rasterbar)"
+		LDFLAGS="$LDFLAGS,$(pkg-config --libs libtorrent-rasterbar)"
+	else
 		mycmakeargs="${mycmakeargs} -DOPTION_TORRENT_SYSTEM=OFF"
 	fi
 	if ! use sound ; then
 		mycmakeargs="${mycmakeargs} -DOPTION_SOUND=OFF"
 	fi
 	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo,$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
-	CFLAGS="$CFLAGS $(pkg-config --cflags libtorrent-rasterbar)"
-	CXXFLAGS="$CXXFLAGS $(pkg-config --cflags libtorrent-rasterbar)"
-	LDFLAGS="$LDFLAGS,$(pkg-config --libs libtorrent-rasterbar)"
 	cmake-utils_src_configure
 }
 
