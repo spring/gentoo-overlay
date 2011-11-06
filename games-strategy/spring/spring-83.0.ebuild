@@ -88,12 +88,12 @@ src_configure() {
 		# Several AI are found in submodules
 		EGIT_HAS_SUBMODULES="true"
 
-		if ! use java ; then
+		if use !java ; then
 			# Don't build Java AI
 			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
 		fi
 
-		if ! use test-ai ; then
+		if use !test-ai ; then
 			# Don't build example AIs
 			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"Null|Test\""
 		fi
