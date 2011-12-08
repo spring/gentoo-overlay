@@ -22,7 +22,7 @@ S="${WORKDIR}/${PN}_${PV}"
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="+ai +java +default multithreaded headless dedicated test-ai debug custom-cflags openmp -lto -lto_whopr test"
-RESTRICT="nomirror"
+RESTRICT="nomirror strip"
 
 GUI_DEPEND="
 	media-libs/devil[jpeg,png,opengl]
