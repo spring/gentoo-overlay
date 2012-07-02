@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>spring</herd>
+<use>
+ <flag name='ai'>Compile multiple Artificial Intelligences for SinglePlayer</flag>
+ <flag name='java'>Compile Java-based AIs</flag>
+ <flag name='default'>Default engine (that's what you want)</flag>
+ <flag name='multithreaded'>An engine build with separate threads for Sim & Rendering</flag>
+ <flag name='headless'>A engine build, that doesn't render anything to screen but still runs the full simulations (e.g. used to test AIs, benchmarks, ...)</flag>
+ <flag name='dedicated'>A dedicated server build (runs no simulation, just broadcasts netcommands)</flag>
+ <flag name='test-ai'>A Null-AI (justs for testing/learning)</flag>
+ <flag name='custom-march'>Sets gcc's `-march=` to current CXXFLAGS one (may break online gaming!)</flag>
+ <flag name='custom-cflags'>Disables engine's CXXFLAGS stripping (this will for sure break online gaming!)</flag>
+</use>
+</pkgmetadata>
