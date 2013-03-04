@@ -16,7 +16,7 @@ fi
 inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
 
 DESCRIPTION="A content download for the Spring RTS engine"
-HOMEPAGE="https://github.com/abma/pr-downloader"
+HOMEPAGE="https://github.com/spring/pr-downloader"
 S="${WORKDIR}/${PN}_${PV}"
 
 LICENSE="GPL-2"
