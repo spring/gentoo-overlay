@@ -3,10 +3,10 @@
   <overlay
       contact = "karl-robert.ernst@uni-jena.de"
       type = "git"
-	  src  = "git://springlobby.info/git/overlay/springlobby.git"
+      src  = "git://github.com/springlobby/overlay.git"
       name = "Spring">
     <link>
-      http://springlobby.info
+      https://github.com/springlobby/overlay
     </link>
     <description>
     	Everything related to the spring real-time strategy game.
