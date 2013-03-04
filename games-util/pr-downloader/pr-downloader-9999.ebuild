@@ -6,7 +6,7 @@ EAPI=3
 
 if [[ ${PV} = 9999* ]]; then
 	GIT_ECLASS="git-2"
-	EGIT_REPO_URI="git://github.com/abma/pr-downloader.git"
+	EGIT_REPO_URI="git://github.com/spring/pr-downloader.git"
 	EGIT_BRANCH="master"
 else
 	SRC_URI="https://github.com/downloads/abma/pr-downloader/${PN}-${PV}.7z"
