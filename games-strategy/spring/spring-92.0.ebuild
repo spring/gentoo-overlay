@@ -29,7 +29,7 @@ IUSE="+ai +java +default multithreaded headless dedicated test-ai debug -profile
 RESTRICT="nomirror strip"
 
 GUI_DEPEND="
-	media-libs/devil[jpeg,png,opengl,tif,gif]
+	media-libs/devil[jpeg,png,opengl,tiff,gif]
 	>=media-libs/freetype-2.0.0
 	>=media-libs/glew-1.4
 	>=media-libs/libsdl-1.2.0[X,opengl]
