@@ -28,6 +28,7 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.6.0
 	>=dev-util/cmake-2.6.0
 	x11-libs/libXpm
+	x11-libs/libXScrnSaver
 	x11-libs/fltk[threads,xft]
 	media-gfx/imagemagick
 	dev-libs/boost
