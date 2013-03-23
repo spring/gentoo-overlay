@@ -56,7 +56,6 @@ DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.6.0
 	tcmalloc? ( dev-util/google-perftools )
 	openmp? ( sys-devel/gcc[openmp] )
-	lto? ( sys-devel/gcc[lto] )
 "
 
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
