@@ -124,7 +124,7 @@ src_configure() {
 			mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
 		else
 			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='^[^N].*'"
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='^[^N].*AI'"
 		fi
 	fi
 
