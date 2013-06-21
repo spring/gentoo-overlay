@@ -120,7 +120,12 @@ src_configure() {
 			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"Null|Test\""
 		fi
 	else
-		mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+		if use !test-ai ; then
+			mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+		else
+			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"^[^N].*AI\""
+		fi
 	fi
 
 	# Selectivly enable/disable build targets

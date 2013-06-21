@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 	x11-libs/libXpm
 	x11-libs/libXScrnSaver
 	x11-libs/fltk[threads,xft]
-	media-gfx/imagemagick
+	media-gfx/imagemagick[png]
 	dev-libs/boost
 "
 
