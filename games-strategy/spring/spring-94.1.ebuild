@@ -120,14 +120,14 @@ src_configure() {
 
 		if use !test-ai ; then
 			# Don't build example AIs
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"Null|Test\""
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='Null|Test'"
 		fi
 	else
 		if use !test-ai ; then
 			mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
 		else
 			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"^[^N].*AI\""
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='^[^N]'"
 		fi
 	fi
 
