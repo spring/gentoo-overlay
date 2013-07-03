@@ -19,7 +19,7 @@ IUSE="+sound debug libnotify gstreamer"
 
 RDEPEND="
         >=dev-libs/boost-1.35
-	>=x11-libs/wxGTK-2.8[X]
+	=x11-libs/wxGTK-2.8*
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
 	sound? (
