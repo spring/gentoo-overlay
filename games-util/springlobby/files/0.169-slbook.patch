@@ -1,5 +1,5 @@
---- /var/tmp/portage/games-util/springlobby-0.169/work/springlobby-0.169/src/aui/slbook.cpp.orig	2013-07-21 15:31:23.957317554 +0200
-+++ /var/tmp/portage/games-util/springlobby-0.169/work/springlobby-0.169/src/aui/slbook.cpp	2013-07-21 15:37:38.502656620 +0200
+--- src/aui/slbook.cpp.orig	2013-07-21 15:31:23.957317554 +0200
++++ src/aui/slbook.cpp	2013-07-21 15:37:38.502656620 +0200
 @@ -323,8 +323,7 @@
  
  		if (p) tabs += wxT(",");
