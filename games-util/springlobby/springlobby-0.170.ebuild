@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 
 inherit cmake-utils eutils flag-o-matic games
 
@@ -19,7 +19,7 @@ IUSE="+sound debug libnotify gstreamer"
 
 RDEPEND="
         >=dev-libs/boost-1.35
-	>=x11-libs/wxGTK-2.8[X]
+	=x11-libs/wxGTK-2.8*
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
 	sound? (
@@ -27,6 +27,7 @@ RDEPEND="
 			media-libs/libvorbis
 			media-libs/flac
 			media-sound/mpg123
+			media-libs/alure
 	)
 	gstreamer? (    media-libs/gstreamer )
 "
