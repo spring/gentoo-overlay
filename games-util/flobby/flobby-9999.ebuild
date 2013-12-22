@@ -21,10 +21,10 @@ IUSE=""
 
 
 RDEPEND="
-	games-strategy/spring
 "
 
 DEPEND="${RDEPEND}
+	games-strategy/spring
 	>=sys-devel/gcc-4.6.0
 	>=dev-util/cmake-2.6.0
 	x11-libs/libXpm
@@ -32,6 +32,7 @@ DEPEND="${RDEPEND}
 	x11-libs/fltk[threads,xft]
 	media-gfx/imagemagick[png]
 	dev-libs/boost
+	net-misc/curl
 "
 
 src_configure() {
