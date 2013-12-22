@@ -7,6 +7,7 @@ EAPI=2
 GIT_ECLASS="git-2"
 EGIT_REPO_URI="git://github.com/cleanrock/flobby.git"
 EGIT_BRANCH="master"
+EGIT_HAS_SUBMODULES="true"
 
 inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
 
@@ -21,10 +22,10 @@ IUSE=""
 
 
 RDEPEND="
+	games-strategy/spring
 "
 
 DEPEND="${RDEPEND}
-	games-strategy/spring
 	>=sys-devel/gcc-4.6.0
 	>=dev-util/cmake-2.6.0
 	x11-libs/libXpm
