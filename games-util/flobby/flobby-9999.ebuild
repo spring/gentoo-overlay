@@ -18,7 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="nomirror"
-IUSE=""
+IUSE="pr-downloader"
 
 
 RDEPEND="
@@ -37,6 +37,9 @@ DEPEND="${RDEPEND}
 "
 
 src_configure() {
+	if !use pr-downloader ; then
+		mycmakeargs="${mycmakeargs} -DWITH_PRD=NO"
+	fi
 	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo,$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
 	cmake-utils_src_configure
 }
