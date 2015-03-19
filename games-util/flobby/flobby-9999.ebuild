@@ -34,6 +34,7 @@ DEPEND="${RDEPEND}
 	media-gfx/imagemagick[png]
 	dev-libs/boost
 	net-misc/curl
+	dev-libs/jsoncpp
 "
 
 src_configure() {
