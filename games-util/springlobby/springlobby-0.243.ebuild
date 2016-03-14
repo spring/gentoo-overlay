@@ -16,7 +16,6 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="nomirror"
 IUSE="+sound debug libnotify gstreamer"
 
-
 RDEPEND="
         dev-libs/boost
 	x11-libs/wxGTK:3.0
@@ -35,12 +34,6 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.6.0
 "
-
-src_unpack() {
-	unpack ${A}
-	cd ${S}
-	#epatch "${FILESDIR}/${P}-wx-config.patch"
-}
 
 src_configure() {
 	if ! use sound ; then
