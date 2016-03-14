@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 
 inherit cmake-utils eutils flag-o-matic games
 
@@ -18,8 +18,8 @@ IUSE="+sound debug libnotify gstreamer"
 
 
 RDEPEND="
-        >=dev-libs/boost-1.35
-	>=x11-libs/wxGTK-2.8[X]
+        dev-libs/boost
+	x11-libs/wxGTK:3.0
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
 	sound? (
@@ -35,6 +35,12 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.6.0
 "
+
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+	#epatch "${FILESDIR}/${P}-wx-config.patch"
+}
 
 src_configure() {
 	if ! use sound ; then
