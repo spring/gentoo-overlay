@@ -39,7 +39,6 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	epatch "${FILESDIR}/${P}-wx-config.patch"
 }
 
 src_configure() {

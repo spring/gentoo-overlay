@@ -17,7 +17,7 @@ else
 fi
 KEYWORDS="~x86 ~amd64 ~ia64"
 
-inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
+inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS} java-pkg-opt-2
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="http://springrts.com"
@@ -59,6 +59,7 @@ DEPEND="${RDEPEND}
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 	tcmalloc? ( dev-util/google-perftools )
+    java? ( >=virtual/jdk-1.6 )
 "
 
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
