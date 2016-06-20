@@ -31,7 +31,7 @@ DEPEND="${RDEPEND}
 	x11-libs/libXpm
 	x11-libs/libXScrnSaver
 	x11-libs/fltk[threads,xft]
-	media-gfx/imagemagick[png]
+	media-gfx/graphicsmagick[png]
 	dev-libs/boost
 	net-misc/curl
 	dev-libs/jsoncpp
