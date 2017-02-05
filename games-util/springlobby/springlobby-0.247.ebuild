@@ -1,10 +1,10 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=6
 
-inherit cmake-utils eutils flag-o-matic games
+inherit cmake-utils eutils flag-o-matic
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -18,7 +18,7 @@ IUSE="+sound debug libnotify gstreamer"
 
 
 RDEPEND="
-        >=dev-libs/boost-1.35
+	>=dev-libs/boost-1.35
 	>=x11-libs/wxGTK-2.9
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
@@ -42,14 +42,13 @@ src_unpack() {
 }
 
 src_configure() {
-	if ! use sound ; then
-		mycmakeargs="${mycmakeargs} -DOPTION_SOUND=OFF"
-	fi
-	if use gstreamer ; then
-		mycmakeargs="${mycmakeargs} -DGSTREAMER=ON"
-	fi
+	mycmakeargs=(
+		-DOPTION_SOUND=$(usex sound)
+		-DGSTREAMER=$(usex gstreamer)
+		-DAUX_VERSION="(Gentoo,$ARCH)"
+		-DCMAKE_INSTALL_PREFIX=/usr/games/
+	)
 
-	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo,$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
 	cmake-utils_src_configure
 }
 
@@ -59,7 +58,6 @@ src_compile () {
 
 src_install() {
 	cmake-utils_src_install
-	prepgamesdirs
 	# bad
 	dodir /usr/share/games/icons/hicolor/scalable/apps/
 	mv ${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
@@ -70,4 +68,3 @@ src_install() {
 	dodir /etc/env.d/
 	echo 'XDG_DATA_DIRS="/usr/share/games"' >> ${D}/etc/env.d/99games
 }
-

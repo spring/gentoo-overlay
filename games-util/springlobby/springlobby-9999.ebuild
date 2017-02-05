@@ -1,14 +1,13 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=6
 
-EAPI="4"
+inherit git-r3 cmake-utils eutils flag-o-matic
+
 EGIT_REPO_URI="git://github.com/springlobby/springlobby.git"
 EGIT_BRANCH="master"
-EGIT_HAS_SUBMODULES="true"
-
-inherit git-2 cmake-utils eutils flag-o-matic games
 
 DESCRIPTION="lobby client for spring rts engine - git version"
 HOMEPAGE="http://springlobby.info"
@@ -20,7 +19,7 @@ RESTRICT="nomirror"
 IUSE="+sound debug libnotify gstreamer"
 
 RDEPEND="
-        dev-libs/boost
+	dev-libs/boost
 	x11-libs/wxGTK:3.0
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
@@ -38,19 +37,18 @@ DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.6.0
 "
 src_unpack() {
-		git-2_src_unpack
+		git-r3_src_unpack
 }
 
 BUILD_DIR="${WORKDIR}/${P}_build"
 src_configure() {
-	if ! use sound ; then
-		mycmakeargs="${mycmakeargs} -DOPTION_SOUND=OFF"
-	fi
-	if use gstreamer ; then
-		mycmakeargs="${mycmakeargs} -DGSTREAMER=ON"
-	fi
+	mycmakeargs=(
+		-DOPTION_SOUND=$(usex sound)
+		-DGSTREAMER=$(usex gstreamer)
+		-DAUX_VERSION="(Gentoo,$ARCH)"
+		-DCMAKE_INSTALL_PREFIX=/usr/games/
+	)
 
-	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo,$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
 	cmake-utils_src_configure
 }
 
@@ -60,7 +58,6 @@ src_compile () {
 
 src_install() {
 	cmake-utils_src_install
-	prepgamesdirs
 	# bad
 	dodir /usr/share/games/icons/hicolor/scalable/apps/
 	mv ${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
@@ -71,4 +68,3 @@ src_install() {
 	dodir /etc/env.d/
 	echo 'XDG_DATA_DIRS="/usr/share/games"' >> ${D}/etc/env.d/99games
 }
-
