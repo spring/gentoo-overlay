@@ -17,7 +17,7 @@ else
 fi
 KEYWORDS="~x86 ~amd64 ~ia64"
 
-inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
+inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS} java-pkg-opt-2
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="http://springrts.com"
@@ -25,14 +25,19 @@ S="${WORKDIR}/${PN}_${PV}"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+ai +java +default multithreaded headless dedicated test-ai debug -profile -custom-march -custom-cflags +openmp +tcmalloc -lto test"
+IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
 RESTRICT="nomirror strip"
+
+REQUIRED_USE="
+	|| ( default headless dedicated )
+	java? ( ai )
+"
 
 GUI_DEPEND="
 	media-libs/devil[jpeg,png,opengl,tiff,gif]
 	>=media-libs/freetype-2.0.0
 	>=media-libs/glew-1.6
-	>=media-libs/libsdl-1.2.0[X,opengl]
+	media-libs/libsdl2[X,opengl]
 	x11-libs/libXcursor
 	media-libs/openal
 	media-libs/libvorbis
@@ -47,7 +52,6 @@ RDEPEND="
 	media-libs/devil[jpeg,png]
 	java? ( virtual/jdk )
 	default? ( ${GUI_DEPEND} )
-	multithreaded? ( ${GUI_DEPEND} )
 "
 
 DEPEND="${RDEPEND}
@@ -55,8 +59,7 @@ DEPEND="${RDEPEND}
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 	tcmalloc? ( dev-util/google-perftools )
-	openmp? ( sys-devel/gcc[openmp] )
-	lto? ( sys-devel/gcc[lto] )
+    java? ( >=virtual/jdk-1.6 )
 "
 
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
@@ -96,8 +99,11 @@ src_configure() {
 	# tcmalloc
 	mycmakeargs="${mycmakeargs} $(cmake-utils_use_use tcmalloc TCMALLOC)"
 
-	# OpenMP (may break online play & reduced performance on single core)
-	mycmakeargs="${mycmakeargs} $(cmake-utils_use openmp OPENMP)"
+	# dxt recompression
+	mycmakeargs="${mycmakeargs} $(cmake-utils_useno bindist USE_LIBSQUISH)"
+
+	# threadpool
+	mycmakeargs="${mycmakeargs} $(cmake-utils_use_use threaded THREADPOOL)"
 
 	# LinkingTimeOptimizations
 	mycmakeargs="${mycmakeargs} $(cmake-utils_use lto LTO)"
@@ -121,14 +127,19 @@ src_configure() {
 
 		if use !test-ai ; then
 			# Don't build example AIs
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"Null|Test\""
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='Null|Test'"
 		fi
 	else
-		mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+		if use !test-ai ; then
+			mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+		else
+			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='^[^N].*AI'"
+		fi
 	fi
 
 	# Selectivly enable/disable build targets
-	for build_type in default multithreaded headless dedicated
+	for build_type in default headless dedicated
 	do
 		mycmakeargs="${mycmakeargs} $(cmake-utils_use ${build_type} BUILD_spring-${build_type})"
 	done
