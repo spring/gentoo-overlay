@@ -2,34 +2,42 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=4
 
 if [[ ${PV} = 9999* ]]; then
-	GIT_ECLASS="git-2"
+	GIT_ECLASS="git-r3"
 	EGIT_REPO_URI="git://github.com/spring/spring.git"
 	EGIT_BRANCH="develop"
 else
 	SRC_URI="mirror://sourceforge/springrts/${PN}_${PV}_src.tar.lzma"
-	KEYWORDS="~amd64 ~x86"
 fi
+KEYWORDS="~x86 ~amd64 ~ia64"
 
-inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
+inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS} java-pkg-opt-2
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="http://springrts.com"
-S="${WORKDIR}/${PN}_${PV}"
+S="${WORKDIR}/${PN}-${PV}"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+ai +java +default multithreaded headless dedicated test-ai debug custom-cflags openmp -lto -lto_whopr test"
+IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
 RESTRICT="nomirror strip"
 
+REQUIRED_USE="
+	|| ( default headless dedicated )
+	java? ( ai )
+"
+
 GUI_DEPEND="
-	media-libs/devil[jpeg,png,opengl]
+	media-libs/devil[jpeg,png,opengl,tiff,gif]
 	>=media-libs/freetype-2.0.0
-	>=media-libs/glew-1.4
-	>=media-libs/libsdl-1.2.0[X,opengl]
+	>=media-libs/glew-1.6
+	media-libs/libsdl2[X,opengl]
+	x11-libs/libXcursor
 	media-libs/openal
+	media-libs/libvorbis
+	media-libs/libogg
 	virtual/glu
 	virtual/opengl
 "
@@ -40,15 +48,14 @@ RDEPEND="
 	media-libs/devil[jpeg,png]
 	java? ( virtual/jdk )
 	default? ( ${GUI_DEPEND} )
-	multithreaded? ( ${GUI_DEPEND} )
 "
 
 DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.2
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
-	openmp? ( sys-devel/gcc[openmp] )
-	lto? ( sys-devel/gcc[lto] )
+	tcmalloc? ( dev-util/google-perftools )
+	java? ( >=virtual/jdk-1.6 )
 "
 
 ### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
@@ -59,23 +66,48 @@ src_test() {
 	cmake-utils_src_test
 }
 
+src_prepare() {
+	git submodule init || die
+	git submodule update || die
+}
 
 src_configure() {
 
-	# Custom cflags may break online play
-	if ! use custom-cflags ; then
-		strip-flags
+	# Custom cflags break online play
+	if use custom-cflags ; then
+		ewarn "\e[1;31m*********************************************************************\e[0m"
+		ewarn "You enabled Custom-CFlags! ('custom-cflags' USE flag)"
+		ewarn "It's \e[1;31mimpossible\e[0m that this build will work in online play."
+		ewarn "Disable it before doing a bugreport."
+		ewarn "\e[1;31m*********************************************************************\e[0m"
+		ebeep 6
 	else
+		strip-flags
+	fi
+
+	# Custom march may break online play
+	if use custom-march ; then
+		ewarn "\e[1;31m*********************************************************************\e[0m"
+		ewarn "You enabled Custom-march! ('custom-march' USE flag)"
+		ewarn "It may break online play."
+		ewarn "If so, disable it before doing a bugreport."
+		ewarn "\e[1;31m*********************************************************************\e[0m"
+
 		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
 	fi
 
-	# OpenMP (may break online play & reduced performance on single core)
-	mycmakeargs="${mycmakeargs} $(cmake-utils_use openmp OPENMP)"
+	# tcmalloc
+	mycmakeargs="${mycmakeargs} $(cmake-utils_use_use tcmalloc TCMALLOC)"
+
+	# dxt recompression
+	mycmakeargs="${mycmakeargs} $(cmake-utils_useno bindist USE_LIBSQUISH)"
+
+	# threadpool
+	mycmakeargs="${mycmakeargs} $(cmake-utils_use_use threaded THREADPOOL)"
 
 	# LinkingTimeOptimizations
 	mycmakeargs="${mycmakeargs} $(cmake-utils_use lto LTO)"
-	mycmakeargs="${mycmakeargs} $(cmake-utils_use lto_whopr LTO_WHOPR)"
-	if use lto || use lto_whopr ; then
+	if use lto; then
 		ewarn "\e[1;31m*********************************************************************\e[0m"
 		ewarn "You enabled LinkingTimeOptimizations! ('lto' USE flag)"
 		ewarn "It's likely that the compilation fails and/or online play may break."
@@ -85,8 +117,6 @@ src_configure() {
 
 	# AI
 	if use ai ; then
-		# Several AI are found in submodules
-		EGIT_HAS_SUBMODULES="true"
 
 		if use !java ; then
 			# Don't build Java AI
@@ -95,14 +125,19 @@ src_configure() {
 
 		if use !test-ai ; then
 			# Don't build example AIs
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX=\"Null|Test\""
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='Null|Test'"
 		fi
 	else
-		mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+		if use !test-ai ; then
+			mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+		else
+			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
+			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='^[^N].*AI'"
+		fi
 	fi
 
 	# Selectivly enable/disable build targets
-	for build_type in default multithreaded headless dedicated
+	for build_type in default headless dedicated
 	do
 		mycmakeargs="${mycmakeargs} $(cmake-utils_use ${build_type} BUILD_spring-${build_type})"
 	done
@@ -112,10 +147,14 @@ src_configure() {
 	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=/usr -DBINDIR=${GAMES_BINDIR#/usr/} -DLIBDIR=${LIBDIR#/usr/} -DDATADIR=${VERSION_DATADIR#/usr/}"
 
 	# Enable/Disable debug symbols
-	if use debug ; then
-		CMAKE_BUILD_TYPE="RELWITHDEBINFO"
+	if use profile ; then
+		CMAKE_BUILD_TYPE="PROFILE"
 	else
-		CMAKE_BUILD_TYPE="RELEASE"
+		if use debug ; then
+			CMAKE_BUILD_TYPE="RELWITHDEBINFO"
+		else
+			CMAKE_BUILD_TYPE="RELEASE"
+		fi
 	fi
 
 	# Configure
@@ -130,10 +169,6 @@ src_install () {
 	cmake-utils_src_install
 
 	prepgamesdirs
-
-	if use custom-cflags ; then
-		ewarn "You decided to use custom CFLAGS. This may be safe, or it may cause your computer to desync more or less often. If you experience desyncs, disable it before doing any bugreport. If you don't know what you are doing, *disable custom-cflags*."
-	fi
 }
 
 pkg_postinst() {
