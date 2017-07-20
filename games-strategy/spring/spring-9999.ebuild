@@ -4,23 +4,24 @@
 
 EAPI=5
 
-if [[ ${PV} = 9999* ]]; then
+if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	GIT_ECLASS="git-r3"
-	EGIT_REPO_URI="git://github.com/spring/spring.git"
+	EGIT_REPO_URI="https://github.com/spring/spring.git"
 	EGIT_BRANCH="develop"
+	KEYWORDS="~x86 ~amd64"
 else
 	SRC_URI="mirror://sourceforge/springrts/${PN}_${PV}_src.tar.lzma"
+	KEYWORDS="x86 amd64"
 fi
-KEYWORDS="~x86 ~amd64 ~ia64"
 
 inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS} java-pkg-opt-2
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="http://springrts.com"
-S="${WORKDIR}/${PN}-${PV}"
+S="${WORKDIR}/${PN}-$PV"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="$PV"
 IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
 RESTRICT="nomirror strip"
 
@@ -58,17 +59,9 @@ DEPEND="${RDEPEND}
 	java? ( >=virtual/jdk-1.6 )
 "
 
-### where to place content files which change each spring release (as opposed to mods, ota-content which go somewhere else)
-VERSION_DATADIR="${GAMES_DATADIR}/${PN}"
-
 
 src_test() {
 	cmake-utils_src_test
-}
-
-src_prepare() {
-	git submodule init || die
-	git submodule update || die
 }
 
 src_configure() {
@@ -142,9 +135,7 @@ src_configure() {
 		mycmakeargs="${mycmakeargs} $(cmake-utils_use ${build_type} BUILD_spring-${build_type})"
 	done
 
-	# Set common dirs
-	LIBDIR="$(games_get_libdir)"
-	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=/usr -DBINDIR=${GAMES_BINDIR#/usr/} -DLIBDIR=${LIBDIR#/usr/} -DDATADIR=${VERSION_DATADIR#/usr/}"
+	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=/opt/springrts.com/spring/$SLOT"
 
 	# Enable/Disable debug symbols
 	if use profile ; then
