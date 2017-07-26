@@ -9,17 +9,17 @@ if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	EGIT_REPO_URI="https://github.com/spring/spring.git"
 	EGIT_BRANCH="develop"
 	KEYWORDS="~x86 ~amd64"
+	S="${WORKDIR}/${PN}-$PV"
 else
 	SRC_URI="mirror://sourceforge/springrts/${PN}_${PV}_src.tar.lzma"
 	KEYWORDS="x86 amd64"
+	S="${WORKDIR}/${PN}_$PV"
 fi
 
 inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS} java-pkg-opt-2
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="http://springrts.com"
-S="${WORKDIR}/${PN}_${PV}"
-
 LICENSE="GPL-2"
 SLOT="$PV"
 IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
@@ -56,14 +56,13 @@ DEPEND="${RDEPEND}
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 	tcmalloc? ( dev-util/google-perftools )
-    java? ( >=virtual/jdk-1.6 )
+	java? ( >=virtual/jdk-1.6 )
 "
 
 
 src_test() {
 	cmake-utils_src_test
 }
-
 
 src_configure() {
 	local -a mycmakeargs
