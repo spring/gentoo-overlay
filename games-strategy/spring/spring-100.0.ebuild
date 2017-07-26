@@ -65,6 +65,7 @@ src_test() {
 
 
 src_configure() {
+	local -a mycmakeargs
 
 	# Custom cflags break online play
 	if use custom-cflags ; then
@@ -86,20 +87,20 @@ src_configure() {
 		ewarn "If so, disable it before doing a bugreport."
 		ewarn "\e[1;31m*********************************************************************\e[0m"
 
-		mycmakeargs="${mycmakeargs} -DMARCH_FLAG=$(get-flag march)"
+		mycmakeargs+=("-DMARCH_FLAG=$(get-flag march)")
 	fi
 
 	# tcmalloc
-	mycmakeargs="${mycmakeargs} $(cmake-utils_use_use tcmalloc TCMALLOC)"
+	mycmakeargs+=($(cmake-utils_use_use tcmalloc TCMALLOC))
 
 	# dxt recompression
-	mycmakeargs="${mycmakeargs} $(cmake-utils_useno bindist USE_LIBSQUISH)"
+	mycmakeargs+=($(cmake-utils_useno bindist USE_LIBSQUISH))
 
 	# threadpool
-	mycmakeargs="${mycmakeargs} $(cmake-utils_use_use threaded THREADPOOL)"
+	mycmakeargs+=($(cmake-utils_use_use threaded THREADPOOL))
 
 	# LinkingTimeOptimizations
-	mycmakeargs="${mycmakeargs} $(cmake-utils_use lto LTO)"
+	mycmakeargs+=($(cmake-utils_use lto LTO))
 	if use lto; then
 		ewarn "\e[1;31m*********************************************************************\e[0m"
 		ewarn "You enabled LinkingTimeOptimizations! ('lto' USE flag)"
@@ -113,29 +114,29 @@ src_configure() {
 
 		if use !java ; then
 			# Don't build Java AI
-			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
+			mycmakeargs+=("-DAI_TYPES=NATIVE")
 		fi
 
 		if use !test-ai ; then
 			# Don't build example AIs
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='Null|Test'"
+			mycmakeargs+=("-DAI_EXCLUDE_REGEX='Null|Test'")
 		fi
 	else
 		if use !test-ai ; then
-			mycmakeargs="${mycmakeargs} -DAI_TYPES=NONE"
+			mycmakeargs+=("-DAI_TYPES=NONE")
 		else
-			mycmakeargs="${mycmakeargs} -DAI_TYPES=NATIVE"
-			mycmakeargs="${mycmakeargs} -DAI_EXCLUDE_REGEX='^[^N].*AI'"
+			mycmakeargs+=("-DAI_TYPES=NATIVE")
+			mycmakeargs+=("-DAI_EXCLUDE_REGEX='^[^N].*AI'")
 		fi
 	fi
 
 	# Selectivly enable/disable build targets
 	for build_type in default headless dedicated
 	do
-		mycmakeargs="${mycmakeargs} $(cmake-utils_use ${build_type} BUILD_spring-${build_type})"
+		mycmakeargs+=($(cmake-utils_use ${build_type} BUILD_spring-${build_type}))
 	done
 
-	mycmakeargs="${mycmakeargs} -DCMAKE_INSTALL_PREFIX=/opt/springrts.com/spring/$SLOT"
+	mycmakeargs+=("-DCMAKE_INSTALL_PREFIX=/opt/springrts.com/spring/$SLOT")
 
 	# Enable/Disable debug symbols
 	if use profile ; then
