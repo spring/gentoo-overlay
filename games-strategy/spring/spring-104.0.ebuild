@@ -8,7 +8,7 @@ if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	GIT_ECLASS="git-r3"
 	EGIT_REPO_URI="https://github.com/spring/spring.git"
 	EGIT_BRANCH="develop"
-	EGIT_COMMIT="37dc5346ca121d38ecb451e556ac1ac655f14ca4" # 1222, 104 rc 1
+	EGIT_COMMIT="CHANGE EGIT_COMMIT IN THE EBUILD"
 	KEYWORDS="~x86 ~amd64"
 	S="${WORKDIR}/${PN}-$PV"
 else
