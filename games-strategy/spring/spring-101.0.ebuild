@@ -19,7 +19,7 @@ fi
 inherit cmake-utils flag-o-matic ${GIT_ECLASS} java-pkg-opt-2 xdg-utils
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
-HOMEPAGE="http://springrts.com"
+HOMEPAGE="https://springrts.com"
 LICENSE="GPL-2"
 SLOT="$PV"
 IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"

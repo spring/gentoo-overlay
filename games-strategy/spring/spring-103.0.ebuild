@@ -8,7 +8,6 @@ if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	GIT_ECLASS="git-r3"
 	EGIT_REPO_URI="https://github.com/spring/spring.git"
 	EGIT_BRANCH="develop"
-	EGIT_COMMIT="103.0"
 	KEYWORDS="~x86 ~amd64"
 	S="${WORKDIR}/${PN}-$PV"
 else
@@ -20,7 +19,7 @@ fi
 inherit cmake-utils flag-o-matic ${GIT_ECLASS} java-pkg-opt-2 xdg-utils
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
-HOMEPAGE="http://springrts.com"
+HOMEPAGE="https://springrts.com"
 LICENSE="GPL-2"
 SLOT="$PV"
 IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
