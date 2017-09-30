@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	GIT_ECLASS="git-r3"
@@ -16,7 +16,7 @@ else
 	S="${WORKDIR}/${PN}_$PV"
 fi
 
-inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
+inherit cmake-utils flag-o-matic ${GIT_ECLASS} xdg-utils
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="http://springrts.com"
@@ -73,7 +73,6 @@ src_configure() {
 		ewarn "It's \e[1;31mimpossible\e[0m that this build will work in online play."
 		ewarn "Disable it before doing a bugreport."
 		ewarn "\e[1;31m*********************************************************************\e[0m"
-		ebeep 6
 	else
 		strip-flags
 	fi
@@ -90,16 +89,16 @@ src_configure() {
 	fi
 
 	# tcmalloc
-	mycmakeargs+=($(cmake-utils_use_use tcmalloc TCMALLOC))
+	mycmakeargs+=(-DUSE_TCMALLOC=$(usex tcmalloc))
 
 	# dxt recompression
-	mycmakeargs+=($(cmake-utils_useno bindist USE_LIBSQUISH))
+	mycmakeargs+=(-DUSE_LIBSQUISH=$(usex bindist no yes))
 
 	# threadpool
-	mycmakeargs+=($(cmake-utils_use_use threaded THREADPOOL))
+	mycmakeargs+=(-DUSE_THREADPOOL=$(usex threaded))
 
 	# LinkingTimeOptimizations
-	mycmakeargs+=($(cmake-utils_use lto LTO))
+	mycmakeargs+=(-DLTO=$(usex lto))
 	if use lto; then
 		ewarn "\e[1;31m*********************************************************************\e[0m"
 		ewarn "You enabled LinkingTimeOptimizations! ('lto' USE flag)"
@@ -132,7 +131,7 @@ src_configure() {
 	# Selectivly enable/disable build targets
 	for build_type in default headless dedicated
 	do
-		mycmakeargs+=($(cmake-utils_use ${build_type} BUILD_spring-${build_type}))
+		mycmakeargs+=(-DBUILD_spring-${build_type}=$(usex $build_type))
 	done
 
 	mycmakeargs+=("-DCMAKE_INSTALL_PREFIX=/opt/springrts.com/spring/$SLOT")
@@ -158,11 +157,8 @@ src_compile () {
 
 src_install () {
 	cmake-utils_src_install
-
-	prepgamesdirs
 }
 
 pkg_postinst() {
-	fdo-mime_mime_database_update
-	games_pkg_postinst
+	xdg_mimeinfo_database_update
 }
