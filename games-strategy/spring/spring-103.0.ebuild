@@ -11,7 +11,7 @@ if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	KEYWORDS="~x86 ~amd64"
 	S="${WORKDIR}/${PN}-$PV"
 else
-	SRC_URI="mirror://sourceforge/springrts/${PN}_${PV}_src.tar.lzma"
+	SRC_URI="https://springrts.com/dl/buildbot/default/master/$PV/source/${PN}_${PV}_src.tar.lzma"
 	KEYWORDS="x86 amd64"
 	S="${WORKDIR}/${PN}_$PV"
 fi
