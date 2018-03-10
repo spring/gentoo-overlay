@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,7 +23,7 @@ HOMEPAGE="https://springrts.com"
 LICENSE="GPL-2"
 SLOT="$PV"
 IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
-RESTRICT="nomirror strip"
+RESTRICT="mirror strip"
 
 REQUIRED_USE="
 	|| ( default headless dedicated )
@@ -58,7 +58,6 @@ DEPEND="${RDEPEND}
 	tcmalloc? ( dev-util/google-perftools )
 	java? ( >=virtual/jdk-1.6 )
 "
-
 
 src_test() {
 	cmake-utils_src_test

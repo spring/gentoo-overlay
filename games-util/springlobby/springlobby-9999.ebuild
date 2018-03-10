@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -15,7 +15,7 @@ HOMEPAGE="http://springlobby.info"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-RESTRICT="nomirror"
+RESTRICT="mirror"
 IUSE="+sound debug libnotify gstreamer"
 
 RDEPEND="
@@ -59,12 +59,11 @@ src_compile () {
 src_install() {
 	cmake-utils_src_install
 	# bad
-	dodir /usr/share/games/icons/hicolor/scalable/apps/
-	mv ${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg ${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg
-	rm ${D}/usr/share/games/pixmaps/ -fr
+	mv "${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg" "${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg"
+	rm "${D}/usr/share/games/pixmaps/" -fr
 	dodir /usr/share/games/applications/
-	mv ${D}/usr/games/share/applications/springlobby.desktop ${D}/usr/share/games/applications/springlobby.desktop
-	rm ${D}/usr/games/share/applications/ -fr
+	mv "${D}/usr/games/share/applications/springlobby.desktop" "${D}/usr/share/games/applications/springlobby.desktop"
+	rm "${D}/usr/games/share/applications/" -fr
 	dodir /etc/env.d/
-	echo 'XDG_DATA_DIRS="/usr/share/games"' >> ${D}/etc/env.d/99games
+	echo 'XDG_DATA_DIRS="/usr/share/games"' >> "${D}/etc/env.d/99games"
 }
