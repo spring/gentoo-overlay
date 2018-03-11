@@ -14,7 +14,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
-IUSE="+sound debug libnotify gstreamer"
+IUSE="+sound debug libnotify"
 
 RDEPEND="
 	>=dev-libs/boost-1.35
@@ -28,7 +28,6 @@ RDEPEND="
 			media-sound/mpg123
 			media-libs/alure
 	)
-	gstreamer? (    media-libs/gstreamer )
 "
 
 DEPEND="${RDEPEND}
@@ -43,7 +42,6 @@ src_unpack() {
 src_configure() {
 	mycmakeargs=(
 		-DOPTION_SOUND=$(usex sound)
-		-DGSTREAMER=$(usex gstreamer)
 		-DAUX_VERSION="(Gentoo,$ARCH)"
 		-DCMAKE_INSTALL_PREFIX=/usr/games/
 	)
