@@ -4,7 +4,8 @@
 
 EAPI=6
 
-inherit cmake-utils eutils flag-o-matic
+WX_GTK_VER="3.0"
+inherit cmake-utils eutils flag-o-matic wxwidgets
 
 DESCRIPTION="lobby client for spring rts engine"
 HOMEPAGE="http://springlobby.info"
@@ -18,7 +19,7 @@ IUSE="+sound debug libnotify"
 
 RDEPEND="
 	>=dev-libs/boost-1.35
-	>=x11-libs/wxGTK-2.9
+	x11-libs/wxGTK:${WX_GTK_VER}[X]
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
 	sound? (

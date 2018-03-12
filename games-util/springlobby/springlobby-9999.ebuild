@@ -4,7 +4,8 @@
 
 EAPI=6
 
-inherit git-r3 cmake-utils eutils flag-o-matic
+WX_GTK_VER="3.0"
+inherit git-r3 cmake-utils eutils flag-o-matic wxwidgets
 
 EGIT_REPO_URI="git://github.com/springlobby/springlobby.git"
 EGIT_BRANCH="master"
@@ -20,7 +21,7 @@ IUSE="+sound debug libnotify"
 
 RDEPEND="
 	dev-libs/boost
-	x11-libs/wxGTK:3.0
+	x11-libs/wxGTK:${WX_GTK_VER}[X]
 	net-misc/curl
 	libnotify? (    x11-libs/libnotify )
 	sound? (
