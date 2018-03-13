@@ -6,10 +6,11 @@
  <flag name='ai'>Compile multiple Artificial Intelligences for SinglePlayer</flag>
  <flag name='java'>Compile Java-based AIs</flag>
  <flag name='default'>Default engine (that's what you want)</flag>
- <flag name='multithreaded'>An engine build with separate threads for Sim and Rendering</flag>
  <flag name='headless'>A engine build, that doesn't render anything to screen but still runs the full simulations (e.g. used to test AIs, benchmarks, ...)</flag>
  <flag name='dedicated'>A dedicated server build (runs no simulation, just broadcasts netcommands)</flag>
+ <flag name='lto'>Enable link-time-optimizations (DANGEROUS: may break multiplayer!)</flag>
  <flag name='test-ai'>A Null-AI (justs for testing/learning)</flag>
+ <flag name='threaded'>Enable threadpools</flag>
  <flag name='custom-march'>Sets gcc's `-march=` to current CXXFLAGS one (may break online gaming!)</flag>
  <flag name='custom-cflags'>Disables engine's CXXFLAGS stripping (this will for sure break online gaming!)</flag>
 </use>
