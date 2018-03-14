@@ -21,16 +21,18 @@ IUSE="+sound debug libnotify"
 
 RDEPEND="
 	dev-libs/boost
-	x11-libs/wxGTK:${WX_GTK_VER}[X]
+	dev-libs/openssl:*
+	libnotify? ( x11-libs/libnotify )
+	media-libs/libpng:*
 	net-misc/curl
-	libnotify? (    x11-libs/libnotify )
-	sound? (
-			media-libs/openal
-			media-libs/libvorbis
-			media-libs/flac
-			media-sound/mpg123
-			media-libs/alure
+	sound? ( media-libs/alure
+	         media-libs/openal
 	)
+	sys-libs/zlib[minizip]
+	x11-libs/libICE
+	x11-libs/libSM
+	x11-libs/libXext
+	x11-libs/wxGTK:${WX_GTK_VER}[X]
 "
 
 DEPEND="${RDEPEND}
