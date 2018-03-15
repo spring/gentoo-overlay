@@ -7,11 +7,11 @@ EAPI=6
 WX_GTK_VER="3.0"
 inherit git-r3 cmake-utils eutils flag-o-matic wxwidgets
 
-EGIT_REPO_URI="git://github.com/springlobby/springlobby.git"
+EGIT_REPO_URI="https://github.com/springlobby/springlobby.git"
 EGIT_BRANCH="master"
 
-DESCRIPTION="lobby client for spring rts engine - git version"
-HOMEPAGE="http://springlobby.info"
+DESCRIPTION="The official lobby client for SpringRTS community games: Balanced Annihilation; Journeywar; Metal Factions; Spring:1944 World War II; Star Wars: Imperial Winter; Tech Annihilation; The Cursed"
+HOMEPAGE="https://springlobby.info"
 
 LICENSE="GPL-2"
 SLOT="0"

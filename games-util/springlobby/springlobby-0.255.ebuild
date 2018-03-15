@@ -7,9 +7,9 @@ EAPI=6
 WX_GTK_VER="3.0"
 inherit cmake-utils eutils flag-o-matic wxwidgets
 
-DESCRIPTION="lobby client for spring rts engine"
-HOMEPAGE="http://springlobby.info"
-SRC_URI="http://www.springlobby.info/tarballs/${P}.tar.bz2"
+DESCRIPTION="The official lobby client for SpringRTS community games: Balanced Annihilation; Journeywar; Metal Factions; Spring:1944 World War II; Star Wars: Imperial Winter; Tech Annihilation; The Cursed"
+HOMEPAGE="https://springlobby.info"
+SRC_URI="https://springlobby.info/tarballs/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
