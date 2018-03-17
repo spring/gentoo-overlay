@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>spring</herd>
-<use>
- <flag name='ai'>Compile multiple Artificial Intelligences for SinglePlayer</flag>
- <flag name='java'>Compile Java-based AIs</flag>
- <flag name='default'>Default engine (that's what you want)</flag>
- <flag name='headless'>A engine build, that doesn't render anything to screen but still runs the full simulations (e.g. used to test AIs, benchmarks, ...)</flag>
- <flag name='dedicated'>A dedicated server build (runs no simulation, just broadcasts netcommands)</flag>
- <flag name='lto'>Enable link-time-optimizations (DANGEROUS: may break multiplayer!)</flag>
- <flag name='test-ai'>A Null-AI (justs for testing/learning)</flag>
- <flag name='threaded'>Enable threadpools</flag>
- <flag name='custom-march'>Sets gcc's `-march=` to current CXXFLAGS one (may break online gaming!)</flag>
- <flag name='custom-cflags'>Disables engine's CXXFLAGS stripping (this will for sure break online gaming!)</flag>
-</use>
+  <maintainer type="person">
+    <email>fedja@protonmail.ch</email>
+    <name>Fedja Beader</name>
+  </maintainer>
+  <maintainer type="project">
+    <email>games@gentoo.org</email>
+    <name>Gentoo Games Project</name>
+  </maintainer>
+  <maintainer type="project">
+    <email>proxy-maint@gentoo.org</email>
+    <name>Proxy Maintainers</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">spring</remote-id>
+  </upstream>
+  <use>
+    <flag name='ai'>Compile multiple additional Artificial Intelligences for SinglePlayer</flag>
+    <flag name='java'>Compile Java-based AIs</flag>
+    <flag name='default'>Default engine (that's what you want)</flag>
+    <flag name='headless'>A engine build, that doesn't render anything to screen but still runs the full simulations (e.g. used to test AIs, benchmarks, ...)</flag>
+    <flag name='dedicated'>A dedicated server build (runs no simulation, just broadcasts netcommands)</flag>
+    <flag name='lto'>Enable link-time-optimizations (may break online gaming!)</flag>
+    <flag name='test-ai'>A Null-AI (justs for testing/learning, does nothing)</flag>
+    <flag name='threaded'>Enable threadpools</flag>
+    <flag name='custom-march'>Sets gcc's `-march=` to current CXXFLAGS one (may break online gaming!)</flag>
+    <flag name='custom-cflags'>Disables engine's CXXFLAGS stripping (this will for sure break online gaming!)</flag>
+  </use>
 </pkgmetadata>
