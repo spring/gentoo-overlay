@@ -33,7 +33,7 @@ REQUIRED_USE="
 GUI_DEPEND="
 	media-libs/devil[jpeg,png,opengl,tiff,gif]
 	>=media-libs/freetype-2.0.0
-	>=media-libs/glew-1.6
+	>=media-libs/glew-1.6:*
 	media-libs/libsdl2[X,opengl]
 	x11-libs/libXcursor
 	media-libs/openal
@@ -47,7 +47,7 @@ RDEPEND="
 	>=dev-libs/boost-1.35
 	>=sys-libs/zlib-1.2.5.1[minizip]
 	media-libs/devil[jpeg,png]
-	java? ( virtual/jdk )
+	java? ( virtual/jdk:* )
 	default? ( ${GUI_DEPEND} )
 "
 
