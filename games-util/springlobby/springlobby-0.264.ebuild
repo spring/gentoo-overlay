@@ -59,6 +59,7 @@ src_compile () {
 src_install() {
 	cmake-utils_src_install
 	# bad
+	dodir /usr/share/games/icons/hicolor/scalable/apps/
 	mv "${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg" "${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg"
 	rm "${D}/usr/share/games/pixmaps/" -fr
 	dodir /usr/share/games/applications/
