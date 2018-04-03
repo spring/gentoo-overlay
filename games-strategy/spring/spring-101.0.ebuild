@@ -1,6 +1,5 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=6
 
@@ -23,7 +22,7 @@ HOMEPAGE="https://springrts.com"
 LICENSE="GPL-2"
 SLOT="$PV"
 IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
-RESTRICT="nomirror strip"
+RESTRICT="mirror strip"
 
 REQUIRED_USE="
 	|| ( default headless dedicated )
@@ -33,7 +32,7 @@ REQUIRED_USE="
 GUI_DEPEND="
 	media-libs/devil[jpeg,png,opengl,tiff,gif]
 	>=media-libs/freetype-2.0.0
-	>=media-libs/glew-1.6
+	>=media-libs/glew-1.6:*
 	media-libs/libsdl2[X,opengl]
 	x11-libs/libXcursor
 	media-libs/openal
@@ -47,7 +46,7 @@ RDEPEND="
 	>=dev-libs/boost-1.35
 	>=sys-libs/zlib-1.2.5.1[minizip]
 	media-libs/devil[jpeg,png]
-	java? ( virtual/jdk )
+	java? ( virtual/jdk:* )
 	default? ( ${GUI_DEPEND} )
 "
 
@@ -58,7 +57,6 @@ DEPEND="${RDEPEND}
 	tcmalloc? ( dev-util/google-perftools )
 	java? ( >=virtual/jdk-1.6 )
 "
-
 
 src_test() {
 	cmake-utils_src_test
