@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -7,11 +7,11 @@ if [[ $PV = 9999* || $PV = *_rc* ]]; then
 	GIT_ECLASS="git-r3"
 	EGIT_REPO_URI="https://github.com/spring/spring.git"
 	EGIT_BRANCH="develop"
-	KEYWORDS="~x86 ~amd64"
+	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${PN}-$PV"
 else
 	SRC_URI="https://springrts.com/dl/buildbot/default/master/$PV/source/${PN}_${PV}_src.tar.lzma"
-	KEYWORDS="x86 amd64"
+	KEYWORDS="amd64 x86"
 	S="${WORKDIR}/${PN}_$PV"
 fi
 
@@ -46,7 +46,7 @@ RDEPEND="
 	>=dev-libs/boost-1.35
 	>=sys-libs/zlib-1.2.5.1[minizip]
 	media-libs/devil[jpeg,png]
-	java? ( virtual/jdk:* )
+	java? ( virtual/jdk:1.8 )
 	default? ( ${GUI_DEPEND} )
 "
 
@@ -55,7 +55,6 @@ DEPEND="${RDEPEND}
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 	tcmalloc? ( dev-util/google-perftools )
-	java? ( >=virtual/jdk-1.6 )
 "
 
 src_test() {
