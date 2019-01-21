@@ -1,6 +1,5 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=5
 
@@ -12,17 +11,16 @@ EGIT_HAS_SUBMODULES="true"
 inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
 
 DESCRIPTION="flobby is a Spring (http://springrts.com) lobby client written in C++."
-HOMEPAGE=""
+HOMEPAGE="https://github.com/cleanrock/flobby"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-RESTRICT="nomirror"
+RESTRICT="mirror"
 IUSE="pr-downloader"
 
-
 RDEPEND="
-	games-strategy/spring
+	games-strategy/spring:*
 "
 
 DEPEND="${RDEPEND}
@@ -53,4 +51,3 @@ src_install() {
 	cmake-utils_src_install
 	prepgamesdirs
 }
-
