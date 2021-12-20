@@ -1,14 +1,17 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+# EAPI 7 not supported by cmake-utils.eclass (deprecated)
+# TODO: replace by cmake.eclass
+# See https://devmanual.gentoo.org/eclass-reference/cmake-utils.eclass/index.html
+EAPI=7
 
-WX_GTK_VER="3.0"
+WX_GTK_VER="3.0-gtk3"
 inherit cmake-utils gnome2-utils wxwidgets
 
 DESCRIPTION="The official lobby client for SpringRTS community games"
-HOMEPAGE="https://springlobby.info"
-SRC_URI="https://www.springlobby.info/tarballs/${P}.tar.bz2"
+HOMEPAGE="https://springlobby.springrts.com"
+SRC_URI="https://springlobby.springrts.com/dl/stable/${P}.tar.bz2"
 
 LICENSE="GPL-2+"
 SLOT="0"
