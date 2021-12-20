@@ -1,13 +1,10 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# EAPI 7 not supported by cmake-utils.eclass (deprecated)
-# TODO: replace by cmake.eclass
-# See https://devmanual.gentoo.org/eclass-reference/cmake-utils.eclass/index.html
-EAPI=7
+EAPI=8
 
 WX_GTK_VER="3.0-gtk3"
-inherit cmake-utils gnome2-utils wxwidgets
+inherit cmake xdg-utils wxwidgets
 
 DESCRIPTION="The official lobby client for SpringRTS community games"
 HOMEPAGE="https://springlobby.springrts.com"
@@ -33,9 +30,9 @@ RDEPEND="
 	)
 "
 
-DEPEND="${RDEPEND}
-	nls? ( sys-devel/gettext )
-"
+DEPEND="${RDEPEND}"
+
+BDEPEND="nls? ( sys-devel/gettext )"
 
 src_configure() {
 	setup-wxwidgets
@@ -45,13 +42,13 @@ src_configure() {
 		-DOPTION_TRANSLATION_SUPPORT=$(usex nls)
 		-DAUX_VERSION="(Gentoo,${ARCH})"
 		)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
