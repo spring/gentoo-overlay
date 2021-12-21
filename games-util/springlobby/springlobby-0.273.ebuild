@@ -1,14 +1,14 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
-WX_GTK_VER="3.0"
-inherit cmake-utils gnome2-utils wxwidgets
+WX_GTK_VER="3.0-gtk3"
+inherit cmake xdg-utils wxwidgets
 
 DESCRIPTION="The official lobby client for SpringRTS community games"
-HOMEPAGE="https://springlobby.info"
-SRC_URI="https://www.springlobby.info/tarballs/${P}.tar.bz2"
+HOMEPAGE="https://springlobby.springrts.com"
+SRC_URI="https://springlobby.springrts.com/dl/stable/${P}.tar.bz2"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -30,9 +30,9 @@ RDEPEND="
 	)
 "
 
-DEPEND="${RDEPEND}
-	nls? ( sys-devel/gettext )
-"
+DEPEND="${RDEPEND}"
+
+BDEPEND="nls? ( sys-devel/gettext )"
 
 src_configure() {
 	setup-wxwidgets
@@ -42,13 +42,13 @@ src_configure() {
 		-DOPTION_TRANSLATION_SUPPORT=$(usex nls)
 		-DAUX_VERSION="(Gentoo,${ARCH})"
 		)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }

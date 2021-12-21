@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 WX_GTK_VER="3.0"
 inherit git-r3 cmake-utils eutils flag-o-matic wxwidgets
@@ -9,8 +9,8 @@ inherit git-r3 cmake-utils eutils flag-o-matic wxwidgets
 EGIT_REPO_URI="https://github.com/springlobby/springlobby.git"
 EGIT_BRANCH="master"
 
-DESCRIPTION="The official lobby client for SpringRTS community games: Balanced Annihilation; Journeywar; Metal Factions; Spring:1944 World War II; Star Wars: Imperial Winter; Tech Annihilation; The Cursed"
-HOMEPAGE="https://springlobby.info"
+DESCRIPTION="The official lobby client for SpringRTS community games"
+HOMEPAGE="https://springlobby.springrts.com"
 
 LICENSE="GPL-2"
 SLOT="0"
