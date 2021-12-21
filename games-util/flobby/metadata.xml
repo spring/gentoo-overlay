@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>flobby</herd>
 <use>
- <flag name='pr-download'>If pr-downloader should be build & installed. Not needed when it is installed with Spring itself. This flag doesn't disable pr-downloader 
-integration, pr-downloader must be installed never the less.</flag>
+ <flag name='pr-downloader'>If pr-downloader should be built and installed. Not needed when it is installed with Spring itself. This flag doesn't disable pr-downloader integration, pr-downloader must be installed nevertheless.</flag>
 </use>
 </pkgmetadata>
