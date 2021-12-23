@@ -1,16 +1,19 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=8
 
-GIT_ECLASS="git-2"
 EGIT_REPO_URI="git://github.com/cleanrock/flobby.git"
 EGIT_BRANCH="master"
+# FIXME: replaced by EGIT_SUBMODULES
+# See https://devmanual.gentoo.org/eclass-reference/git-r3.eclass/index.html
 EGIT_HAS_SUBMODULES="true"
 
-inherit games cmake-utils eutils fdo-mime flag-o-matic games ${GIT_ECLASS}
+# FIXME: deprecated 'fdo-mime' was inherited but not used
+# xdg*.eclass should be used for mime DB update if needed
+inherit git-r3 cmake flag-o-matic
 
-DESCRIPTION="flobby is a Spring (http://springrts.com) lobby client written in C++."
+DESCRIPTION="flobby is a spring (http://springrts.com) lobby client written in C++"
 HOMEPAGE="https://github.com/cleanrock/flobby"
 
 LICENSE="GPL-2"
@@ -40,14 +43,17 @@ src_configure() {
 		mycmakeargs="${mycmakeargs} -DWITH_PRD=NO"
 	fi
 	mycmakeargs="${mycmakeargs} -DAUX_VERSION=(Gentoo,$ARCH) -DCMAKE_INSTALL_PREFIX=/usr/games/"
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile () {
-	cmake-utils_src_compile
+	cmake_src_compile
 }
 
 src_install() {
-	cmake-utils_src_install
-	prepgamesdirs
+	# Depreciation notice
+	# games.eclass was removed from Gentoo mainstream
+	# Files should not belong to root:games any more
+	# See https://wiki.gentoo.org/wiki/Project:Games/Ebuild_howto
+	cmake_src_install
 }
