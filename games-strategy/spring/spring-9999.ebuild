@@ -1,27 +1,20 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-if [[ $PV = 9999* || $PV = *_rc* ]]; then
-	GIT_ECLASS="git-r3"
-	EGIT_REPO_URI="https://github.com/spring/spring.git"
-	EGIT_BRANCH="develop"
-	KEYWORDS="~x86 ~amd64"
-	S="${WORKDIR}/${PN}-$PV"
-else
-	SRC_URI="https://springrts.com/dl/buildbot/default/master/$PV/source/${PN}_${PV}_src.tar.lzma"
-	KEYWORDS="x86 amd64"
-	S="${WORKDIR}/${PN}_$PV"
-fi
+EGIT_REPO_URI="https://github.com/spring/spring.git"
+EGIT_BRANCH="master"
+KEYWORDS="~amd64 ~x86"
+S="${WORKDIR}/${PN}-$PV"
 
-inherit cmake-utils flag-o-matic ${GIT_ECLASS} java-pkg-opt-2 xdg-utils
+inherit git-r3 cmake flag-o-matic java-pkg-opt-2 xdg-utils
 
 DESCRIPTION="A 3D multiplayer real-time strategy game engine"
 HOMEPAGE="https://springrts.com"
 LICENSE="GPL-2"
-SLOT="$PV"
-IUSE="+ai +java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
+SLOT="0"
+IUSE="+ai java +default headless dedicated test-ai debug -profile -custom-march -custom-cflags +tcmalloc +threaded bindist -lto test"
 RESTRICT="mirror strip"
 
 REQUIRED_USE="
@@ -46,7 +39,7 @@ RDEPEND="
 	>=dev-libs/boost-1.35
 	>=sys-libs/zlib-1.2.5.1[minizip]
 	media-libs/devil[jpeg,png]
-	java? ( virtual/jdk:* )
+	java? ( >=virtual/jdk-1.8:* )
 	default? ( ${GUI_DEPEND} )
 "
 
@@ -55,18 +48,31 @@ DEPEND="${RDEPEND}
 	app-arch/p7zip
 	>=dev-util/cmake-2.6.0
 	tcmalloc? ( dev-util/google-perftools )
-	java? ( >=virtual/jdk-1.6 )
+	sys-libs/libunwind
 "
 
+# Some patches from the 'develop' branch
+# to build with GCC 11
+# See commits 931543c774 and d525928cd3
+
+# LIBDIR is badly hardcoded in main CMakeLists.txt
+# Should be replaced by CMAKE_INSTALL_LIBDIR
+
+PATCHES=(
+	"${FILESDIR}/spring-105.0-lua.patch"
+	"${FILESDIR}/spring-105.0-weapon.patch"
+	"${FILESDIR}/spring-9999-libdir.patch"
+	)
+
 src_test() {
-	cmake-utils_src_test
+	cmake_src_test
 }
 
 src_prepare() {
 	if use java; then
 		java-pkg-opt-2_src_prepare
 	else
-		default_src_prepare
+		cmake_src_prepare
 	fi
 }
 
@@ -141,8 +147,6 @@ src_configure() {
 		mycmakeargs+=(-DBUILD_spring-${build_type}=$(usex $build_type))
 	done
 
-	mycmakeargs+=("-DCMAKE_INSTALL_PREFIX=/opt/springrts.com/spring/$SLOT")
-
 	# Enable/Disable debug symbols
 	if use profile ; then
 		CMAKE_BUILD_TYPE="PROFILE"
@@ -155,17 +159,18 @@ src_configure() {
 	fi
 
 	# Configure
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile () {
-	cmake-utils_src_compile
+	cmake_src_compile
 }
 
 src_install () {
-	cmake-utils_src_install
+	cmake_src_install
 }
 
 pkg_postinst() {
 	xdg_mimeinfo_database_update
+	xdg_desktop_database_update
 }

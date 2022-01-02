@@ -1,23 +1,42 @@
-# SpringRTS Gentoo overlay
+# Spring RTS Gentoo overlay
 
-Usage:
-##### Install SpringRTS engines:
-Note: this step is optional, most lobbies can automatically (and insecurely) download them on demand.
-To disable the later for e.g. SpringLobby, do ```mkdir ~/.spring && touch ~/.spring/engine```.
-SpringLobby will still offer and try to download them, but it will fail.
+## Overlay
 
-Spring 103.0 is the current (2017.07.20) stable.
-```
-emerge -a '=games-strategy/spring-103.0'
-emerge -a '=games-strategy/spring-100.0' # For games:PA,PD
-```
-Note: each engine installs to its own SLOT=$PV and into ```/opt/springrts.com/spring/$SLOT```
+This overlay is registered in the Gentoo database as `spring` (see https://repos.gentoo.org).
 
-##### Install a lobby client:
+## Spring RTS engine
+
+Note: installing the engine through `emerge` is optional, most lobbies can automatically (and insecurely) download it on demand. To disable the later for SpringLobby, do `mkdir ~/.spring && touch ~/.spring/engine` (SpringLobby will still offer and try to download, but it will actually fail).
+
+Version 105.0 is the current stable, and 9999 is the latest from the `master` (= `maintenance`) branch.
+
+Update on 2022-01-02: `spring-105.0` is currently broken because of an incomplete source tarball (tracked by https://springrts.com/mantis/view.php?id=6446). Use `spring-9999` that is also pointing today to the 105.0 version.
+
 ```
-emerge -a 'games-util/springlobby'
+emerge -a '=games-strategy/spring-105.0'  # For stable
+emerge -a '=games-strategy/spring-9999'   # For latest
 ```
 
-If you installed engines via the above procedure then open/run SpringLobby, go to Edit->Preferences->Spring->Add New
-and add the installed engines, first by picking UnitSync path ```/opt/springrts.com/spring/$SLOT/lib/unitsync.so```
-and then the spring engine itself ```/opt/springrts.com/spring/$SLOT/bin/spring```
+## Install SpringLobby client
+
+*Do not use the package from the Gentoo mainstream, it is outdated & broken, and has been requested for removal (see https://github.com/gentoo/gentoo/pull/23483).*
+
+Version 0.273 is the current stable, and 9999 is the latest from the `master` branch.
+
+```
+emerge -a '=games-util/springlobby-0.273' # For stable
+emerge -a '=games-util/springlobby-9999'  # For latest
+
+```
+
+If you installed the engine via the above procedure, then:
+- open/run `SpringLobby`
+- go to `Edit->Preferences->Spring->Add New`
+- add the installed engine:
+  - first by picking UnitSync path: `/usr/lib64/unitsync.so` (for AMD64)
+  - then by picking the engine: `/usr/bin/spring`
+
+## See also
+
+- [Spring RTS Gentoo installation](https://springrts.com/wiki/Gentoo_install)
+- [SpringLobby Gentoo installation](https://github.com/springlobby/springlobby/wiki/Install#Gentoo)

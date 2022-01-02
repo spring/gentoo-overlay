@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2b60a3a7e7..c86912ea15 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -103,7 +103,7 @@ message(STATUS "Targetting ${BUILD_BITS}bit")
+ ### Install paths (relative to CMAKE_INSTALL_PREFIX)
+ if    (UNIX AND NOT MINGW)
+ 	set(BINDIR  "bin"                CACHE STRING "Where to install binaries")
+-	set(LIBDIR  "lib"                CACHE STRING "Where to install libraries")
++	set(LIBDIR  "lib64"              CACHE STRING "Where to install libraries")
+ 	set(MANDIR  "share/man"          CACHE STRING "Where to install man pages")
+ 	set(DOCDIR  "share/doc/spring-VERSION" CACHE STRING "Where to install basic project documentation (README, LICENSE, etc.)") # TODO set correct version here, and re-enable userdocs in doc/CMakeLists.txt
+ 	set(DATADIR "share/games/spring" CACHE STRING "Where to install game content")
