@@ -3,8 +3,8 @@
 
 EAPI=7
 
-WX_GTK_VER="3.0"
-inherit git-r3 cmake-utils eutils flag-o-matic wxwidgets
+WX_GTK_VER="3.0-gtk3"
+inherit git-r3 cmake eutils flag-o-matic wxwidgets
 
 EGIT_REPO_URI="https://github.com/springlobby/springlobby.git"
 EGIT_BRANCH="master"
@@ -49,15 +49,15 @@ src_configure() {
 		-DCMAKE_INSTALL_PREFIX=/usr/games/
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile () {
-	cmake-utils_src_compile
+	cmake_src_compile
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	# bad
 	dodir /usr/share/games/icons/hicolor/scalable/apps/
 	mv "${D}/usr/games/share/icons/hicolor/scalable/apps/springlobby.svg" "${D}/usr/share/games/icons/hicolor/scalable/apps/springlobby.svg"
