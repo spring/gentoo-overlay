@@ -4,6 +4,22 @@
 
 This overlay is registered in the Gentoo database as `spring` (see https://repos.gentoo.org).
 
+How to use that overlay:
+
+- If `eselect-repository` is not installed: `emerge eselect-repository`
+- Enable the `spring` repository: `eselect repository enable spring`
+- *Optional*: check the repository is now declared in `/etc/portage/repos.conf/eselect-repo.conf`
+- Update that repository: `emerge --sync spring`
+- *Optional*: check the repository has been downloaded in `/var/db/repos/spring`
+- Unmask the `spring` and `springlobby` packages:
+
+```
+echo "games-strategy/spring ~amd64" >> /etc/portage/package.accept_keywords
+echo "games-util/springlobby ~amd64" >> /etc/portage/package.accept_keywords
+```
+
+Note: `package.accept_keywords` can be either a file or a directory (see `man portage` for details).
+
 ## Spring RTS engine
 
 Note: installing the engine through `emerge` is optional, most lobbies can automatically (and insecurely) download it on demand. To disable the later for SpringLobby, do `mkdir ~/.spring && touch ~/.spring/engine` (SpringLobby will still offer and try to download, but it will actually fail).
@@ -18,8 +34,6 @@ emerge -a '=games-strategy/spring-9999'   # For latest
 ```
 
 ## Install SpringLobby client
-
-*Do not use the package from the Gentoo mainstream, it is outdated & broken, and has been requested for removal (see https://github.com/gentoo/gentoo/pull/23483).*
 
 Version 0.273 is the current stable, and 9999 is the latest from the `master` branch.
 
