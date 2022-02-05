@@ -1,1 +1,4 @@
+# Source tarball broken on server
 =games-strategy/spring-105.0
+# Build fails on master 106.0
+=games-strategy/spring-9999

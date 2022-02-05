@@ -51,17 +51,11 @@ DEPEND="${RDEPEND}
 	sys-libs/libunwind
 "
 
-# Some patches from the 'develop' branch
-# to build with GCC 11
-# See commits 931543c774 and d525928cd3
-
 # LIBDIR is badly hardcoded in main CMakeLists.txt
 # Should be replaced by CMAKE_INSTALL_LIBDIR
 
 PATCHES=(
-	"${FILESDIR}/spring-105.0-lua.patch"
-	"${FILESDIR}/spring-105.0-weapon.patch"
-	"${FILESDIR}/spring-9999-libdir.patch"
+	"${FILESDIR}/spring-105.0-libdir.patch"
 	)
 
 src_test() {
